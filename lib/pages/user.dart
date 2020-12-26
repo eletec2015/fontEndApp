@@ -29,7 +29,7 @@ class FtechUserPage extends StatelessWidget {
       children: <Widget>[
         Center(
             child: FadeIn(
-                child: Image.asset('assets/images/splash.jpg',
+                child: Image.asset('assets/images/splash.png',
                     fit: BoxFit.scaleDown,height: 200,width: 200,))),
         Positioned(
             bottom: 50,

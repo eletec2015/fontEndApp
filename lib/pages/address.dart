@@ -49,6 +49,7 @@ class _AddressListPageState extends State<AddressListPage> {
     Widget body = Builder(
         builder: (context) => Scaffold(
               appBar: AppBar(
+                backgroundColor: Color(0xFF213c56),
                 title: pick
                     ? Text(Localization.of(context).chooseAddress,style: TextStyle(color: Colors.white),)
                     : Text(Localization.of(context).address,style: TextStyle(color: Colors.white)),

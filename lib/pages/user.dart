@@ -29,7 +29,7 @@ class FtechUserPage extends StatelessWidget {
       children: <Widget>[
         Center(
             child: FadeIn(
-                child: Image.asset('assets/images/logoing.png',
+                child: Image.asset('assets/images/splash.jpg',
                     fit: BoxFit.scaleDown,height: 200,width: 200,))),
         Positioned(
             bottom: 50,
@@ -70,8 +70,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-        appBar: AppBar(
-          backgroundColor: Theme.of(context).primaryColor,
+        appBar: AppBar(   backgroundColor: Color(0xFF213c56),
           title: Text(Localization.of(context).userProfile),
           leading: BackButton(
             onPressed: () {
@@ -212,7 +211,7 @@ class _UserPhotoPageState extends State<UserPhotoPage> {
                         brightness: Brightness.dark)),
                 child: Scaffold(
                     key: _scaffoldKey,
-                    appBar: AppBar(
+                    appBar: AppBar(   backgroundColor: Color(0xFF213c56),
                       title: Text(Localization.of(context).avatar),
                       actions: <Widget>[
                         IconButton(

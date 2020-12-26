@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'dart:io';
 import 'package:bookservice/I18n/i18n.dart';
 import 'package:bookservice/pages/pages.dart';
 import 'package:flutter/material.dart';
@@ -26,13 +26,28 @@ Future<T> showImagePickModal<T>(BuildContext context,
                   onPressed: () async {
                     await ImagePicker()
                         .getImage(source: ImageSource.camera)
-                        .then((file) {
+                        .then((file) async {
                       if (file != null) {
-                        return ImageCropper.cropImage(
+                       return await ImageCropper.cropImage(
                             sourcePath: file.path,
-                            maxWidth: maxWidth,
-                            maxHeight: maxHeight,
-                            aspectRatio: aspectRatio,
+                            aspectRatioPresets: Platform.isAndroid
+                                ? [
+                              CropAspectRatioPreset.square,
+                              CropAspectRatioPreset.ratio3x2,
+                              CropAspectRatioPreset.original,
+                              CropAspectRatioPreset.ratio4x3,
+                              CropAspectRatioPreset.ratio16x9
+                            ]
+                                : [
+                              CropAspectRatioPreset.original,
+                              CropAspectRatioPreset.square,
+                              CropAspectRatioPreset.ratio3x2,
+                              CropAspectRatioPreset.ratio4x3,
+                              CropAspectRatioPreset.ratio5x3,
+                              CropAspectRatioPreset.ratio5x4,
+                              CropAspectRatioPreset.ratio7x5,
+                              CropAspectRatioPreset.ratio16x9
+                            ],
                             androidUiSettings: AndroidUiSettings(
                                 toolbarTitle: 'Cropper',
                                 toolbarColor: Colors.deepOrange,
@@ -40,8 +55,22 @@ Future<T> showImagePickModal<T>(BuildContext context,
                                 initAspectRatio: CropAspectRatioPreset.original,
                                 lockAspectRatio: false),
                             iosUiSettings: IOSUiSettings(
-                              minimumAspectRatio: 1.0,
+                              title: 'Cropper',
                             ));
+//                        return ImageCropper.cropImage(
+//                            sourcePath: file.path,
+//                            maxWidth: maxWidth,
+//                            maxHeight: maxHeight,
+//                            aspectRatio: aspectRatio,
+//                            androidUiSettings: AndroidUiSettings(
+//                                toolbarTitle: 'Cropper',
+//                                toolbarColor: Colors.deepOrange,
+//                                toolbarWidgetColor: Colors.white,
+//                                initAspectRatio: CropAspectRatioPreset.original,
+//                                lockAspectRatio: false),
+//                            iosUiSettings: IOSUiSettings(
+//                              minimumAspectRatio: 1.0,
+//                            ));
                       }
                       return null;
                     }).then((value) => Navigator.of(context).pop(value));
@@ -55,9 +84,38 @@ Future<T> showImagePickModal<T>(BuildContext context,
                   onPressed: () async {
                     await ImagePicker()
                         .getImage(source: ImageSource.gallery)
-                        .then((file) {
+                        .then((file) async {
                       if (file != null) {
-                        return ImageCropper.cropImage(
+                        return await ImageCropper.cropImage(
+                            sourcePath: file.path,
+                            aspectRatioPresets: Platform.isAndroid
+                                ? [
+                              CropAspectRatioPreset.square,
+                              CropAspectRatioPreset.ratio3x2,
+                              CropAspectRatioPreset.original,
+                              CropAspectRatioPreset.ratio4x3,
+                              CropAspectRatioPreset.ratio16x9
+                            ]
+                                : [
+                              CropAspectRatioPreset.original,
+                              CropAspectRatioPreset.square,
+                              CropAspectRatioPreset.ratio3x2,
+                              CropAspectRatioPreset.ratio4x3,
+                              CropAspectRatioPreset.ratio5x3,
+                              CropAspectRatioPreset.ratio5x4,
+                              CropAspectRatioPreset.ratio7x5,
+                              CropAspectRatioPreset.ratio16x9
+                            ],
+                            androidUiSettings: AndroidUiSettings(
+                                toolbarTitle: 'Cropper',
+                                toolbarColor: Colors.deepOrange,
+                                toolbarWidgetColor: Colors.white,
+                                initAspectRatio: CropAspectRatioPreset.original,
+                                lockAspectRatio: false),
+                            iosUiSettings: IOSUiSettings(
+                              title: 'Cropper',
+                            ));
+                      /*  return ImageCropper.cropImage(
                             sourcePath: file.path,
                             maxWidth: maxWidth,
                             maxHeight: maxHeight,
@@ -70,7 +128,7 @@ Future<T> showImagePickModal<T>(BuildContext context,
                                 lockAspectRatio: false),
                             iosUiSettings: IOSUiSettings(
                               minimumAspectRatio: 1.0,
-                            ));
+                            ));*/
                       }
                       return null;
                     }).then((value) => Navigator.of(context).pop(value));

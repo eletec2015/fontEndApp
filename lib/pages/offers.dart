@@ -16,7 +16,7 @@ class _OffersState extends State<Offers> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      appBar: AppBar(   backgroundColor: Color(0xFF213c56),
         title: Text("Offers",style: TextStyle(color: Colors.white,fontFamily: 'Amiko'),),
       ),
       body: ListView.builder(

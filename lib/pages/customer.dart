@@ -47,6 +47,8 @@ return BlocBuilder<AppBloc, AppState>(
             child: FocusTraversalGroup(
               policy: OrderedTraversalPolicy(),
               child: Scaffold(
+
+                extendBodyBehindAppBar: true,
                 drawer: Drawer(
                   child: ListView(
                     children: [
@@ -183,7 +185,9 @@ return BlocBuilder<AppBloc, AppState>(
                         subtitle: state.locale.languageCode == 'en'
                             ? Text(Localization
                             .of(context)
-                            .english)
+                            .english,style: TextStyle(fontFamily: "Amiko", color: Theme
+                            .of(context)
+                            .primaryColor),)
                             : Text(Localization
                             .of(context)
                             .arabic),
@@ -211,7 +215,9 @@ return BlocBuilder<AppBloc, AppState>(
                             "assets/images/receipting.png", height: 30,
                             width: 30,),
                         ),
-                        title: Text("Offers", style: TextStyle(color: Theme
+                        title: Text(Localization
+                            .of(context)
+                            .offers, style: TextStyle(color: Theme
                             .of(context)
                             .primaryColor, fontFamily: "Amiko"),),
                       ),
@@ -241,26 +247,32 @@ return BlocBuilder<AppBloc, AppState>(
                               .primaryColor),),
                       ),
                       SizedBox(height: 20,),
-                      Image.asset('assets/images/title.png', height: 30,),
+                      Image.asset('assets/images/eletec_logoing.png', height: 30,),
                       SizedBox(height: 10,)
                     ],
                   ),
                 ),
-                // appBar: AppBar(
-                //   iconTheme: IconThemeData(
-                //     color: Colors.white
-                //   ),
-                //   backgroundColor: Theme.of(context).primaryColor,
-                //   leading: screen==1?IconButton(
-                //   icon: Icon(Icons.arrow_back,color:Colors.white),
-                //     onPressed: () {
-                //       setState(() {
-                //         screen=0;
-                //       });
-                //     },
-                //
-                //   ):null
-                // ),
+                 appBar: screen==1?AppBar(
+                   iconTheme: IconThemeData(
+                     color: Colors.white
+                   ),
+                   title: Text("Booking History",style: TextStyle(color: Colors.white,fontFamily: "amiko"),),
+                   backgroundColor: Color(0xFF213c56),
+                   leading: screen==1?IconButton(
+                   icon: Icon(Icons.arrow_back,color:Colors.white),
+                     onPressed: () {
+                       setState(() {
+                         screen=0;
+                       });
+                     },
+
+                   ):null
+                 ):AppBar(
+                   backgroundColor: Color(0xFF213c56),
+
+
+
+                 ),
                 body: Container(
                   constraints: BoxConstraints.expand(),
                   decoration: screen==0?BoxDecoration(
@@ -272,7 +284,7 @@ return BlocBuilder<AppBloc, AppState>(
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(
-                            left: 50.0, right: 50.0, top: 60.0),
+                            left: 50.0,  top: 60.0),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -301,10 +313,10 @@ return BlocBuilder<AppBloc, AppState>(
                               ],
                             ),
                             CircleAvatar(
-                              radius: 40,
+                              radius: 45,
                               backgroundColor: Colors.white,
                               child: Image.asset(
-                                'assets/images/logoing.png', height: 60,),
+                                'assets/images/splash.jpg', height: 60,width: 60,),
                             ),
                           ],
                         ),

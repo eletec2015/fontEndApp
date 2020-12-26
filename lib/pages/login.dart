@@ -52,7 +52,7 @@ class LoginView extends StatelessWidget {
             SizedBox.fromSize(
               size: Size.fromHeight(MediaQuery.of(context).size.height / 4),
               child: Image.asset(
-                "assets/images/title.png",
+                "assets/images/eletec_logoing.png",
                 width: 100,
                 height: 100,
                 alignment: Alignment.center,

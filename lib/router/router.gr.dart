@@ -21,7 +21,6 @@ class Routes {
   static const String addressPage = '/address';
   static const String pickaddr = '/pickaddr';
   static const String _orderPage = '/order/:id?';
-  static const String _orderlistpage='/orderlistpage';
   static String orderPage({dynamic id = ''}) => '/order/$id';
   static const String _orderPostPage = '/order/:id?/post';
   static String orderPostPage({dynamic id = ''}) => '/order/$id/post';
@@ -30,7 +29,6 @@ class Routes {
   static const String orderCommentPostPage = '/comment/post';
   static const all = <String>{
     authentication,
-    _orderlistpage,
     _userPage,
     faqPage,
     contractPage,
@@ -66,8 +64,6 @@ class Router extends RouterBase {
       generator: AddressPageRouter(),
     ),
     RouteDef(Routes.pickaddr, page: AddressListPage),
-
-    RouteDef(Routes._orderlistpage, page: OrderListPage),
     RouteDef(Routes._orderPage, page: OrderPage),
     RouteDef(Routes._orderPostPage, page: OrderPostPage),
     RouteDef(Routes.additionPostPage, page: AdditionPostPage),
@@ -118,17 +114,6 @@ class Router extends RouterBase {
         ),
         settings: data,
         fullscreenDialog: true,
-      );
-    },
-    OrderListPage: (data) {
-      final args = data.getArgs<OrderListArguments>(
-        orElse: () => OrderListArguments(),
-      );
-      return buildAdaptivePageRoute<dynamic>(
-        builder: (context) => OrderListPage(
-
-        ),
-        settings: data,
       );
     },
     OrderPage: (data) {
@@ -357,10 +342,7 @@ class AddressListPageArguments {
   final bool pick;
   AddressListPageArguments({this.key, this.pick = false});
 }
-class OrderListArguments {
 
-  OrderListArguments();
-}
 /// OrderPage arguments holder class
 class OrderPageArguments {
   final Key key;

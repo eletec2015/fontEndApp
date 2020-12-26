@@ -80,6 +80,8 @@ abstract class RestService {
             .add(new InterceptorsWrapper(onRequest: (Options options) async {
           var token = await CacheService.instance.getToken();
           options.headers['Authorization'] = token;
+          print("afnan hassan ");
+          print(token);
           return options;
         }, onResponse: (Response response) {
           if (response?.data is Map) {

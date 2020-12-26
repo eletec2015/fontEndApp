@@ -16,7 +16,7 @@ class _FaqPageState extends State<FaqPage> {
         child: BlocBuilder<FaqBloc, FaqState>(
           builder: (context, state) {
             return Scaffold(
-              appBar: AppBar(
+              appBar: AppBar(   backgroundColor: Color(0xFF213c56),
                 title: Text(Localization.of(context).faqs,style: TextStyle(color: Colors.white,fontFamily: 'Amiko'),),
               ),
               body: SingleChildScrollView(

@@ -49,6 +49,8 @@ class Localization implements WidgetsLocalizations {
   String get roomNo => "RoomNo";
   String get mapinfo=> "I want to use the map to locate";
 
+  String get offers=> "Offers";
+
   List<String> get modeltype => [
 
     'Personal',
@@ -176,7 +178,7 @@ class Localization implements WidgetsLocalizations {
     'Electrical',
     'A/C Maintenance',
     'Plumbing',
-    'Dust',
+    'Duct',
     'Interior Fitouts',
     'Maintainience',
       ];
@@ -625,6 +627,8 @@ class $ar extends Localization {
   String get joinUs => 'انضم إلينا';
 
   @override
+  String get offers=> "عروض";
+  @override
   String get email => 'البريد الإلكتروني';
 
   @override
@@ -1012,7 +1016,7 @@ class $en extends Localization {
     'Electrical',
     'A/C Maintenance',
     'Plumbing',
-    'Dust',
+    'Duct',
     'Interior Fitouts',
     'Maintainience',
       ];
@@ -1086,7 +1090,8 @@ class $en extends Localization {
     'Personal',
     'Company',
   ];
-
+  @override
+  String get offers=> "Offers";
   @override
   List<String> get styletype => [
 

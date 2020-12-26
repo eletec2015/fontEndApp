@@ -247,7 +247,7 @@ class _OrderPostPageState extends State<OrderPostPage> {
                           labelText: Localization.of(context).address, border: OutlineInputBorder()),
                       builder: (context, state) {
                         return Text(
-                          state?.value?.address ?? '',
+                          state?.value?.address ?? 'hassan',
                           maxLines: 3,
                           overflow: TextOverflow.ellipsis,
                           softWrap: true,
@@ -297,6 +297,7 @@ class _OrderPostPageState extends State<OrderPostPage> {
                     child: RaisedButton(
                       child: Text(Localization.of(context).submit),
                       onPressed: () {
+                        print(formBloc.address);
                         formBloc.submit();
                       },
                     ),
@@ -309,7 +310,7 @@ class _OrderPostPageState extends State<OrderPostPage> {
             backgroundColor: Colors.white,
               key: _scaffoldKey,
               appBar: AppBar(
-                title: Text('Order New'),
+                title: Text('Order New',style:TextStyle(color: Colors.white,fontFamily: "Amiko")),
               ),
               body: body)
               : body;
@@ -836,7 +837,7 @@ class _OrderPageState extends State<OrderPage> {
                     CommentBloc commentBloc =
                     BlocProvider.of<CommentBloc>(context);
                     return Scaffold(
-                        appBar: AppBar(
+                        appBar: AppBar(   backgroundColor: Color(0xFF213c56),
                           title: Text(
                             title[selectedIndex],
                             style: TextStyle(color: Colors.white,fontFamily: 'Amiko'),
@@ -1038,7 +1039,7 @@ class ViewOrderImage extends StatelessWidget {
                 iconTheme: IconThemeData(color: Colors.white),
                 brightness: Brightness.dark)),
         child: Scaffold(
-            appBar: AppBar(),
+            appBar: AppBar(   backgroundColor: Color(0xFF213c56),),
             body: BlocBuilder<AppBloc, AppState>(builder: (context, state) {
               return Stack(
                 children: <Widget>[

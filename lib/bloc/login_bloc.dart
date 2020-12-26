@@ -92,9 +92,14 @@ class SendFormBloc extends FormBloc<String, String> {
   @override
   void onSubmitting() {
     RestService.instance.phoneGenerate(
+
         {'phone_number': dialCode.value + phoneNumber.value}).then((value) {
+          print(value);
       emitSuccess(canSubmitAgain: true);
     }).catchError((onError) {
+
+      print(onError);
+    //  emitSuccess(canSubmitAgain: true);
       emitFailure();
       addErrors(onError?.response?.data);
     });

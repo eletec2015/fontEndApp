@@ -28,8 +28,8 @@ class _WelcomPageState extends State<WelcomPage> {
         curve: Curves.easeIn,
         child: Container(
           alignment: Alignment.bottomCenter,
-          padding: EdgeInsets.symmetric(vertical: 40),
-          child: Image.asset('assets/images/title.png', fit: BoxFit.cover),
+          padding: EdgeInsets.symmetric(vertical: 40,horizontal: 40),
+          child: Image.asset('assets/images/eletec_logoing.png'),
         ));
 
     Widget widget(state) => Scaffold(

@@ -25,7 +25,7 @@ class _ServicePageState extends State<ServicePage> {
                   crossAxisCount: 2,
                   mainAxisSpacing: 0,
                   crossAxisSpacing: 20,
-                  padding: const EdgeInsets.all(60),
+                  padding: EdgeInsets.all(MediaQuery.of(context).size.height * 0.05),
                   children: [
                     ['assets/images/airConditioned.png', Localization.of(context).serviceType[1], '1'],
                     ['assets/images/electricaling.png', Localization.of(context).serviceType[0], '0'],

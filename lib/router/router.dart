@@ -40,7 +40,6 @@ import 'package:flutter/material.dart';
         page: AddressListPage,
         fullscreenDialog: true),
 
-    AdaptiveRoute(path: '/orderlistpage', page: OrderListPage),
     AdaptiveRoute(path: '/order/:id?', page: OrderPage),
     AdaptiveRoute(path: '/order/:id?/post', page: OrderPostPage),
     AdaptiveRoute(

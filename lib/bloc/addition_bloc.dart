@@ -15,8 +15,8 @@ part 'addition_state.dart';
 // ignore_for_file: non_constant_identifier_names
 
 class AdditionBloc extends Bloc<AdditionEvent, AdditionState> {
-  RefreshController refreshController = RefreshController(initialRefresh: true);
 
+  RefreshController refreshController = RefreshController(initialRefresh: true);
   AdditionBloc() : super(AdditionState.initial());
 
   @override

@@ -51,6 +51,8 @@ class Localization implements WidgetsLocalizations {
 
   String get offers=> "Offers";
 
+  String get profile=> "Profile";
+
   List<String> get modeltype => [
 
     'Personal',
@@ -128,7 +130,7 @@ class Localization implements WidgetsLocalizations {
 
   String get arabic => 'Arabic';
 
-  String get logout => 'LOGOUT';
+  String get logout => 'Logout';
 
   String get firstName => 'First Name';
 
@@ -659,6 +661,9 @@ class $ar extends Localization {
       ];
 
   @override
+  String get choose_service1 => 'اختر الخدمة التي تحتاجها ';
+
+  @override
   List<String> get serviceType => [
 
     'الكهرباء',
@@ -667,8 +672,8 @@ class $ar extends Localization {
     'غبار',
     'التجهيزات الداخلية',
         'صيانة',
-      ];
-
+      ];  @override
+  String get choose_service2 => 'جانب الباب الخاص بك';
   @override
   List<List<String>> get mainInfo => [
         [
@@ -947,7 +952,7 @@ class $en extends Localization {
   String get arabic => 'Arabic';
 
   @override
-  String get logout => 'LOGOUT';
+  String get logout => 'Logout';
 
   @override
   String get firstName => 'First Name';
@@ -1292,6 +1297,10 @@ class $en extends Localization {
       ]
     ]
       ];
+  @override
+  String get choose_service1 => 'Choose Service That You Need In ';
+  @override
+  String get choose_service2 => 'Your Door Side';
   @override
   String get viewdetail => 'View Detail';
   @override

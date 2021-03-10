@@ -21,8 +21,7 @@ part 'comment.dart';
 part 'client.g.dart';
 
 // ignore_for_file: non_constant_identifier_names
-
-class CacheService<T> {
+  class CacheService<T> {
   static CacheService get instance => CacheService._();
 
   CacheService._();
@@ -80,12 +79,13 @@ abstract class RestService {
             .add(new InterceptorsWrapper(onRequest: (Options options) async {
           var token = await CacheService.instance.getToken();
           options.headers['Authorization'] = token;
-          print("afnan hassan ");
+         // print("afnan hassan ");
           print(token);
           return options;
         }, onResponse: (Response response) {
           if (response?.data is Map) {
             response.data = response?.data['result'];
+            print(response.data);
           }
           return response;
         }, onError: (DioError e) async {
@@ -116,6 +116,9 @@ abstract class RestService {
 
   @GET('/users/info/')
   Future<User> getInfo({@Queries() Map<String, dynamic> query});
+
+  @GET('/profileDetails/info/')
+  Future<ProfileDetails> getProfileDetail({@Queries() Map<String, dynamic> query});
 
   @PATCH('/users/{id}/')
   Future<User> uploadPhoto(@Path() String id, @Part() File photo);

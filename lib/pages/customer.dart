@@ -3,17 +3,17 @@ import 'package:bookservice/bloc/app_bloc.dart';
 import 'package:bookservice/bloc/order_bloc.dart';
 import 'package:bookservice/pages/faqs.dart';
 import 'package:bookservice/pages/pages.dart';
+import 'package:bookservice/pages/profile.dart';
 import 'package:bookservice/views/rally_tabbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:bookservice/pages/offers.dart';
-import 'package:bookservice/router/router.gr.dart';
 import 'package:auto_route/auto_route.dart';
 import 'order.dart';
 import 'service.dart';
 import 'setting.dart';
-
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 class CustomerPage extends StatefulWidget {
   @override
   _CustomerPageState createState() => _CustomerPageState();
@@ -74,7 +74,6 @@ return BlocBuilder<AppBloc, AppState>(
                           });
 //                      ExtendedNavigator.of(context).push('/orderlistpage',
 //                      arguments: OrderListArguments(
-//
 //                      ));
 
 //                  context.navigator.router.findMatch(settings)
@@ -134,6 +133,26 @@ return BlocBuilder<AppBloc, AppState>(
                           .primaryColor),
                       ListTile(
                         onTap: () {
+                          Navigator.push(context, MaterialPageRoute(
+                              builder: (context) => Profile(dialogNav : false)));
+                        },
+                        leading: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Image.asset(
+                            "assets/images/profile.png", height: 30,
+                            width: 30,),
+                        ),
+                        title: Text(Localization
+                            .of(context)
+                            .profile, style: TextStyle(color: Theme
+                            .of(context)
+                            .primaryColor, fontFamily: "Amiko"),),
+                      ),
+                      Divider(color: Theme
+                          .of(context)
+                          .primaryColor),
+                      ListTile(
+                        onTap: () {
                           ExtendedNavigator.of(context);
 //                  context.navigator.router.findMatch(settings)
                           // ignore: unawaited_futures
@@ -168,7 +187,7 @@ return BlocBuilder<AppBloc, AppState>(
                         ),
                         title: Text(Localization
                             .of(context)
-                            .faqs, style: TextStyle(color: Theme
+                            .faqs, style: TextStyle(fontFamily: "Amiko", color: Theme
                             .of(context)
                             .primaryColor),),
                       ),
@@ -176,7 +195,7 @@ return BlocBuilder<AppBloc, AppState>(
                           .of(context)
                           .primaryColor),
 
-                      SwitchListTile(
+                      ListTile(
                         title: Text(Localization
                             .of(context)
                             .language,style: TextStyle(fontFamily: "Amiko", color: Theme
@@ -191,15 +210,19 @@ return BlocBuilder<AppBloc, AppState>(
                             : Text(Localization
                             .of(context)
                             .arabic),
-                        secondary: FaIcon(FontAwesomeIcons.globeAsia,color: Theme
-                            .of(context)
-                            .primaryColor),
-                        onChanged: (bool value) {
-                          print(value);
-                          BlocProvider.of<AppBloc>(context).add(SwitchLanguage(
-                              value ? Locale('ar', 'IQ') : Locale('en', '')));
-                        },
-                        value: state.locale.languageCode != 'en',
+                        leading: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child:FaIcon(FontAwesomeIcons.globeAsia,color: Theme
+                              .of(context)
+                              .primaryColor),
+                        ),
+                        // secondary:
+                        // onChanged: (bool value) {
+                        //   // print(value);
+                        //   // BlocProvider.of<AppBloc>(context).add(SwitchLanguage(
+                        //   //     value ? Locale('ar', 'IQ') : Locale('en', '')));
+                        // },
+                       // value: state.locale.languageCode != 'en',
                       ),
                       Divider(color: Theme
                           .of(context)
@@ -284,16 +307,15 @@ return BlocBuilder<AppBloc, AppState>(
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(
-                            left: 50.0,  top: 60.0),
+                            left: 50.0,  top: 60.0,right: 50.0),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(Localization
                                     .of(context)
-                                    .welcome1, style: TextStyle(
+                                    .welcome, style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 18,
                                     fontWeight: FontWeight.w500,
@@ -312,11 +334,13 @@ return BlocBuilder<AppBloc, AppState>(
                                     fontFamily: 'Amiko'),),
                               ],
                             ),
+                            state.locale.languageCode == 'en' ?SizedBox(width: MediaQuery.of(context).size.width*0.06,):
+                            SizedBox(width: MediaQuery.of(context).size.width*0.23,),
                             CircleAvatar(
-                              radius: 45,
+                              radius: 35,
                               backgroundColor: Colors.white,
                               child: Image.asset(
-                                'assets/images/splash.jpg', height: 60,width: 60,),
+                                'assets/images/splash.jpg', height: 50,width: 50,),
                             ),
                           ],
                         ),

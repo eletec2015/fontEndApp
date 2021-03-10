@@ -16,7 +16,7 @@ class _AuthenticationState extends State<Authentication> {
         print("usman");
         print(state.status);
         if (state.status == AppStatus.Welcom) {
-          return WelcomPage();
+          return WelcomePage();
         }
 
         if (state.status == AppStatus.Authenticating) {

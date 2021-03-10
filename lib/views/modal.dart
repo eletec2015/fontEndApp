@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:bookservice/I18n/i18n.dart';
+import 'package:bookservice/constanc.dart';
 import 'package:bookservice/pages/pages.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
@@ -22,7 +23,10 @@ Future<T> showImagePickModal<T>(BuildContext context,
             child: Column(
               children: <Widget>[
                 FlatButton(
-                  child: Text(Localization.of(context).camera),
+                  child: Text(Localization.of(context).camera,style:TextStyle(
+                      color: primaryColor,
+                      fontSize: 13,
+                      fontFamily: 'Amiko')),
                   onPressed: () async {
                     await ImagePicker()
                         .getImage(source: ImageSource.camera)
@@ -80,7 +84,10 @@ Future<T> showImagePickModal<T>(BuildContext context,
                   color: Colors.grey,
                 ),
                 FlatButton(
-                  child: Text(Localization.of(context).gallery),
+                  child: Text(Localization.of(context).gallery,style:TextStyle(
+                      color: primaryColor,
+                      fontSize: 13,
+                      fontFamily: 'Amiko')),
                   onPressed: () async {
                     await ImagePicker()
                         .getImage(source: ImageSource.gallery)

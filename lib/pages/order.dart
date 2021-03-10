@@ -6,6 +6,7 @@ import 'package:bookservice/bloc/addition_bloc.dart';
 import 'package:bookservice/bloc/app_bloc.dart';
 import 'package:bookservice/bloc/comment_bloc.dart';
 import 'package:bookservice/bloc/order_bloc.dart';
+import 'package:bookservice/constanc.dart';
 import 'package:bookservice/router/router.gr.dart';
 import 'package:bookservice/views/date_time/any_field_bloc_builder.dart';
 import 'package:bookservice/views/dialog.dart';
@@ -114,7 +115,7 @@ class OrderListItem extends StatelessWidget {
             child: Container(
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(10)),
-                    border: Border.all(color: Colors.blue, width: 1),
+                    border: Border.all(color:Color(0xFF213c56), width: 1),
                     shape: BoxShape.rectangle,
                     color: Colors.white,
                     boxShadow: [
@@ -131,7 +132,7 @@ class OrderListItem extends StatelessWidget {
                           borderRadius:
                           BorderRadius.vertical(top: Radius.circular(8)),
                           shape: BoxShape.rectangle,
-                          color: bgColor[400],
+                          color: Color(0xFF213c56),
                         ),
                         child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -982,7 +983,10 @@ class _AdditionPostPageState extends State<AdditionPostPage> {
                                           ),
                                           Expanded(
                                             child: Text(
-                                                'Images for select a picture or take'),
+                                                'Images for select a picture or take',style:TextStyle(
+                                                color: primaryColor,
+                                                fontSize: 11,
+                                                fontFamily: 'Amiko')),
                                           ),
                                         ])
                                         : Stack(
@@ -1003,13 +1007,25 @@ class _AdditionPostPageState extends State<AdditionPostPage> {
                       textFieldBloc: formBloc.tag,
                       maxLines: 3,
                       maxLength: 128,
+                        style:TextStyle(
+                    color: primaryColor,
+                        fontSize: 11,
+                        fontFamily: 'Amiko'),
                       decoration: InputDecoration(
                           labelText: 'Description',
-                          border: OutlineInputBorder()),
+
+                          border: OutlineInputBorder(),
+                      labelStyle: TextStyle(
+                          color: primaryColor,
+                          fontSize: 11,
+                          fontFamily: 'Amiko')),
                     ),
                     SizedBox(height: 10),
                     RaisedButton(
-                      child: Text(Localization.of(context).submit),
+                      child: Text(Localization.of(context).submit,style:TextStyle(
+                          color: Colors.white,
+                          fontSize: 11,
+                          fontFamily: 'Amiko')),
                       onPressed: () {
                         formBloc.submit();
                       },

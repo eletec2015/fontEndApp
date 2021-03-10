@@ -114,22 +114,31 @@ class JobItem extends StatelessWidget {
                 labelAlign: null,
                 requiredIndicator: null,
                 label: 'Card',
-                content: Text(data.card ?? ''),
+                content: Text(data.card ?? '',style:TextStyle(
+                    color: Colors.white,
+                    fontSize: 11,
+                    fontFamily: 'Amiko')),
               ),
               CardSettingsField(
                 fieldPadding: null,
                 labelAlign: null,
                 requiredIndicator: null,
                 label: 'Unit',
-                content: Text('${data.unit}'),
+                content: Text('${data.unit}',style:TextStyle(
+    color: Colors.white,
+    fontSize: 11,
+    fontFamily: 'Amiko')),
               ),
               CardSettingsField(
                 fieldPadding: null,
                 labelAlign: null,
                 requiredIndicator: null,
                 label: 'Action Date',
-                content: Text(data.date ?? ''),
-              ),
+                content: Text(data.date ?? '',style:TextStyle(
+    color: Colors.white,
+    fontSize: 11,
+    fontFamily: 'Amiko'))),
+
               CardSettingsField(
                 fieldPadding: null,
                 labelAlign: null,

@@ -5,18 +5,17 @@ import 'package:flutter/material.dart';
 import 'package:bookservice/apis/client.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class WelcomPage extends StatefulWidget {
+class WelcomePage extends StatefulWidget {
   @override
-  _WelcomPageState createState() => _WelcomPageState();
+  _WelcomePageState createState() => _WelcomePageState();
 }
 
-class _WelcomPageState extends State<WelcomPage> {
+class _WelcomePageState extends State<WelcomePage> {
   Stream<String> url;
 
   @override
   void initState() {
     super.initState();
-
     url = RestServiceExtra.instance.getAdvertising();
   }
 
@@ -28,7 +27,7 @@ class _WelcomPageState extends State<WelcomPage> {
         curve: Curves.easeIn,
         child: Container(
           alignment: Alignment.bottomCenter,
-          padding: EdgeInsets.symmetric(vertical: 40,horizontal: 40),
+          padding: EdgeInsets.symmetric(vertical: 60,horizontal: 60),
           child: Image.asset('assets/images/eletec_logoing.png'),
         ));
 

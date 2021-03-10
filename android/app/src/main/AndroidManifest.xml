@@ -19,7 +19,7 @@
 
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="bookservice"
+        android:label="Syanah Time"
         android:icon="@mipmap/launcher_icon">
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"

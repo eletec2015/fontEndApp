@@ -47,29 +47,21 @@ class Localization implements WidgetsLocalizations {
   String get street => "Street";
   String get building => "Building";
   String get roomNo => "RoomNo";
-  String get mapinfo=> "I want to use the map to locate";
+  String get mapinfo => "I want to use the map to locate";
 
-  String get offers=> "Offers";
+  String get offers => "Offers";
+
+  String get profile => "Profile";
 
   List<String> get modeltype => [
-
-    'Personal',
-    'Company',
-  ];
+        'Personal',
+        'Company',
+      ];
 
   List<String> get styletype => [
-
-    'Apartment',
-    'Villa',
-  ];
-
-
-
-
-
-
-
-
+        'Apartment',
+        'Villa',
+      ];
 
   String get status => 'Status';
   String get welcome => 'Good Morning !!!! ';
@@ -128,7 +120,7 @@ class Localization implements WidgetsLocalizations {
 
   String get arabic => 'Arabic';
 
-  String get logout => 'LOGOUT';
+  String get logout => 'Logout';
 
   String get firstName => 'First Name';
 
@@ -162,8 +154,7 @@ class Localization implements WidgetsLocalizations {
   List<String> get contractOption =>
       ['Economy', 'Standard', 'Premium', 'Customized'];
 
-  List<String> get title =>
-      ['BaseInfo', 'Additional', 'Comment'];
+  List<String> get title => ['BaseInfo', 'Additional', 'Comment'];
   List<String> get orderStatus => [
         'New',
         'Confirm',
@@ -174,17 +165,15 @@ class Localization implements WidgetsLocalizations {
       ];
 
   List<String> get serviceType => [
-
-    'Electrical',
-    'A/C Maintenance',
-    'Plumbing',
-    'Duct',
-    'Interior Fitouts',
-    'Maintainience',
+        'Duct',
+        'A/C Maintenance',
+        'Plumbing',
+        'Duct',
+        'Interior Fitouts',
+        'Maintainience',
       ];
 
   List<List<String>> get mainInfo => [
-
         [
           //Electrical
           'Light fixture repair',
@@ -192,17 +181,18 @@ class Localization implements WidgetsLocalizations {
           'Light fixture installation',
           'Water heater repair',
           'Other custom job e.g LED installation'
-        ],   [
-      //AC
-      'AC cooling repair',
-      'AC noise repair',
-      'AC digital controller installation',
-      'AC controller repair',
-      'AC tripping repair',
-      'AC leakage repair',
-      'AC service',
-      'Other custom job e.g new AC unit installation'
-    ],
+        ],
+        [
+          //AC
+          'AC cooling repair',
+          'AC noise repair',
+          'AC digital controller installation',
+          'AC controller repair',
+          'AC tripping repair',
+          'AC leakage repair',
+          'AC service',
+          'Other custom job e.g new AC unit installation'
+        ],
         [
           //Plumbing
           'Water pump or motor repair',
@@ -212,20 +202,22 @@ class Localization implements WidgetsLocalizations {
           'Other custom job e.g outdoor plumbing'
         ],
         [
-          //Cleaning
-          'General cleaning',
-          'Floor cleaning or pilishing'
+          //Duct
+          'Duct Installation',
+          'Duct Cleaning',
+          'Duct Smoke/Leakage Test',
+          'Duct Modification',
         ],
-    //Interior Fitouts
+        //Interior Fitouts
+        ['NA'],
         [
-        'General cleaning',
-    'Floor cleaning or pilishing'
-  ],
-    [
-      //Cleaning
-      'General cleaning',
-      'Floor cleaning or pilishing'
-    ]
+          //Maintenance
+          'Painting',
+          'Masoner',
+          'Aluminium',
+          'Gate/Gate Barrier',
+          'Carpentry'
+        ]
       ];
 
   List<List<List<String>>> get subInfo => [
@@ -367,9 +359,13 @@ class Localization implements WidgetsLocalizations {
           ],
         ],
         [
-          // Cleaning
+          // Interior Fitouts
+          ['NA'],
+        ],
+        [
+          // Duct
           [
-            'Regular cleaning',
+            'DUCT',
             'Pre Party cleaning',
             'Post Party cleaning',
             'Other(Provide in Instruction Box / attached photo)'
@@ -382,45 +378,30 @@ class Localization implements WidgetsLocalizations {
           ]
         ],
         [
-        // Interior Fitouts
-        [
-          'Regular cleaning',
-          'Pre Party cleaning',
-          'Post Party cleaning',
-          'Other(Provide in Instruction Box / attached photo)'
-        ],
-    [
-      'Ceramic Tiles',
-      'Marble',
-      'Brick',
-      'Other(Provide in Instruction Box / attached photo)'
-    ]
-  ],
-    [
-      // Maintainience
-      [
-        'Regular cleaning',
-        'Pre Party cleaning',
-        'Post Party cleaning',
-        'Other(Provide in Instruction Box / attached photo)'
-      ],
-      [
-        'Ceramic Tiles',
-        'Marble',
-        'Brick',
-        'Other(Provide in Instruction Box / attached photo)'
-      ]
-    ]
+          // Maintainience
+          [
+            'Regular cleaning',
+            'Pre Party cleaning',
+            'Post Party cleaning',
+            'Other(Provide in Instruction Box / attached photo)'
+          ],
+          [
+            'Ceramic Tiles',
+            'Marble',
+            'Brick',
+            'Other(Provide in Instruction Box / attached photo)'
+          ]
+        ]
       ];
 
   List<FAQ> get faq => [
         new FAQ('What services do we offer?', '''
-We offer over maintenance services within the following service categories - AC, Plumbing, Electrical, House Cleaning, For more details, kindly visit www.eletec.ae .
+We offer over maintenance services within the following service categories - Plumbing, Electrical, Maintenance, Interior Fitout, duct ,A/C Maintenance, For more details, kindly visit www.eletec.ae .
 '''),
         new FAQ('How do I book a service?', '''
 Customers can book a service using the following methods –
 1)Book from our iOS and Android mobile apps.
-2)Or give us a call +971 50 307 0781.
+2)Or give us a call +971 60 059 3323.
 We recommend downloading and using our Android and iOS mobile apps, for the best user end-to-end experience.
 '''),
         new FAQ('Can I schedule a service for a later date/time?', '''
@@ -435,7 +416,7 @@ Yes. Our Scheduled Services are offered on Friday or Public Holidays. But there 
 We offer Same Day Services, for anyone who is flexible on the timing but wants the Service within the day. The same day service does not come with a fixed arrival time commitment but with earliest availability option, within office hours (8 am to 6 pm) on the same day, possibility. You can select on mobile app, to book a Same Day Service. Also, note the Same Day service can only be booked before 12 noon.
 '''),
         new FAQ('Do we offer contracts?', '''
-Yes, we have contracts for Annual Maintenance Contracts, which we have 4 options (Economy, Standard, Premium, and Customized Package) as per the client needs. You can find the details in our mobile app, or you can or give us a call +971 50 307 0781.
+Yes, we have contracts for Annual Maintenance Contracts, which we have 4 options (Economy, Standard, Premium, and Customized Package) as per the client needs. You can find the details in our mobile app, or you can or give us a call +971 60 059 3323.
 '''),
         new FAQ('Please explain the 7 Day Service Warranty', '''
 For every service we deliver, we offer a 7-day service warranty which means that if what we fixed is reported faulty again within 7 calendar days, we will come back and try to fix it for free. In case the issue is with the parts and materials, any return on that will be dependent on the warranty that comes from the supplier. Generally parts do not come with a warranty when bought standalone. Also, our Service Warranty is for repair and installation jobs only.
@@ -443,19 +424,21 @@ For every service we deliver, we offer a 7-day service warranty which means that
         new FAQ(
             'How can I reach my assigned Technician after he has been assigned to me?',
             '''
-Once a Genie has been assigned to a customer, a customer can call the Supervisor of the by calling the number provided in the mobile app. This avoids the hassle of saving numbers for a professional every time you take a home maintenance service. There is no direct calling enabled between the technician and the customer.
+There is no direct calling enabled between the technician and the customer. Once a Genie has been assigned to a customer, a customer can call the Supervisor of the by calling the number provided in the mobile app. This avoids the hassle of saving numbers for a professional every time you take a home maintenance service.
 '''),
         new FAQ('Can I cancel a booking?', '''
 To cancel a booking, a customer needs to either call or cancel the booking from the app, by clicking on the delete button. For details on cancellation policy, please refer our policy.
 '''),
         new FAQ('Can I reschedule a booking?', '''
-You can reschedule a service, following a discussion with the assigned Supervisor of the technician.
+You can reschedule the booking calling to the toll free number (+971 60 059 3323.) of the company line.
 '''),
         new FAQ('How and when do I pay for a service?', '''
 You can pay for a service by a credit card/ debit card, account transfer or in cash upon completion of your job or as advance if the job requires an advance payment. Advance payment is generally required for jobs which need procurement of parts and materials.
 '''),
         new FAQ('How can I leave feedback or raise a complaint?', '''
-As a customer, you can evaluate or leave a feedback from the mobile app: Bookings -> Select booked service -> Below you will find Evaluation, select the necessary option from Not Satisfied to Very Satisfied and you can optional write you comment and click Save.
+As a customer you can evaluate or leave a feedback from the mobile app: booking ->booking
+history ->below you will find three section of basic info- additional-comment
+Choose comet option for giving rating and feedback
 '''),
       ];
 }
@@ -539,7 +522,7 @@ class $ar extends Localization {
 
   @override
   String get chooseAddress => 'اختر عنوانًا';
-@override
+  @override
   String get status => 'الحالة';
   @override
   String get addAddress => 'Add Address';
@@ -555,9 +538,8 @@ class $ar extends Localization {
 
   @override
   String get language => 'لغة';
-@override
-  List<String> get title =>
-      ["معلومات أساسية" ,"إضافية" , "تعليق"];
+  @override
+  List<String> get title => ["معلومات أساسية", "إضافية", "تعليق"];
   @override
   String get english => 'English';
   @override
@@ -575,21 +557,19 @@ class $ar extends Localization {
   @override
   String get roomNo => "الغرفة";
   @override
-  String get mapinfo=> "أريد استخدام الخريطة لتحديد الموقع";
+  String get mapinfo => "أريد استخدام الخريطة لتحديد الموقع";
 
   @override
   List<String> get modeltype => [
-
-    'شخصي',
-    'شركة',
-  ];
+        'شخصي',
+        'شركة',
+      ];
 
   @override
   List<String> get styletype => [
-
-    'شقة',
-    'فيلا',
-  ];
+        'شقة',
+        'فيلا',
+      ];
   @override
   String get arabic => 'Arabic';
 
@@ -627,7 +607,7 @@ class $ar extends Localization {
   String get joinUs => 'انضم إلينا';
 
   @override
-  String get offers=> "عروض";
+  String get offers => "عروض";
   @override
   String get email => 'البريد الإلكتروني';
 
@@ -640,35 +620,38 @@ class $ar extends Localization {
   String get sendJoninfo =>
       'رجى إرسال معلوماتك إلى mobileapp@eletec.ae أو الاتصال على 042500090';
   @override
-  String get login => 'تسجيل الدخول';  @override
+  String get login => 'تسجيل الدخول';
+  @override
   String get tocontinue => "لمواصلة حسابك";
   @override
   String get phoneverification => "التحقق من الهاتف";
   @override
-  List<String> get contractOption =>
-      ["الاقتصاد" , "قياسي" , "ممتاز" , "مخصص"];
+  List<String> get contractOption => ["الاقتصاد", "قياسي", "ممتاز", "مخصص"];
 
   @override
   List<String> get orderStatus => [
-    'جديد',
-    'تؤكد',
-    'اكتمال',
-    'قيد الانتظار',
-    'إلغاء',
-    'حذف',
+        'جديد',
+        'تؤكد',
+        'اكتمال',
+        'قيد الانتظار',
+        'إلغاء',
+        'حذف',
       ];
 
   @override
-  List<String> get serviceType => [
+  String get choose_service1 => 'اختر الخدمة التي تحتاجها ';
 
-    'الكهرباء',
-    'صيانة التكييف',
+  @override
+  List<String> get serviceType => [
+        'الكهرباء',
+        'صيانة التكييف',
         'السباكة',
-    'غبار',
-    'التجهيزات الداخلية',
+        'غبار',
+        'التجهيزات الداخلية',
         'صيانة',
       ];
-
+  @override
+  String get choose_service2 => 'جانب الباب الخاص بك';
   @override
   List<List<String>> get mainInfo => [
         [
@@ -947,7 +930,7 @@ class $en extends Localization {
   String get arabic => 'Arabic';
 
   @override
-  String get logout => 'LOGOUT';
+  String get logout => 'Logout';
 
   @override
   String get firstName => 'First Name';
@@ -1012,18 +995,16 @@ class $en extends Localization {
 
   @override
   List<String> get serviceType => [
-
-    'Electrical',
-    'A/C Maintenance',
-    'Plumbing',
-    'Duct',
-    'Interior Fitouts',
-    'Maintainience',
+        'Electrical',
+        'A/C Maintenance',
+        'Plumbing',
+        'Duct',
+        'Interior Fitouts',
+        'Maintainience',
       ];
 
   @override
   List<List<String>> get mainInfo => [
-
         [
           //Electrical
           'Light fixture repair',
@@ -1031,17 +1012,18 @@ class $en extends Localization {
           'Light fixture installation',
           'Water heater repair',
           'Other custom job e.g LED installation'
-        ],  [
-      //AC
-      'AC cooling repair',
-      'AC noise repair',
-      'AC digital controller installation',
-      'AC controller repair',
-      'AC tripping repair',
-      'AC leakage repair',
-      'AC service',
-      'Other custom job e.g new AC unit installation'
-    ],
+        ],
+        [
+          //AC
+          'AC cooling repair',
+          'AC noise repair',
+          'AC digital controller installation',
+          'AC controller repair',
+          'AC tripping repair',
+          'AC leakage repair',
+          'AC service',
+          'Other custom job e.g new AC unit installation'
+        ],
         [
           //Plumbing
           'Water pump or motor repair',
@@ -1051,21 +1033,24 @@ class $en extends Localization {
           'Other custom job e.g outdoor plumbing'
         ],
         [
-          //Cleaning
-          'General cleaning',
-          'Floor cleaning or pilishing'
+          //Duct
+          'Duct Installation',
+          'Duct Cleaning',
+          'Duct Smoke/Leakage Test',
+          'Duct Modification',
         ],
-    [
-      //Cleaning
-      'General cleaning',
-      'Floor cleaning or pilishing'
-    ],
-    [
-      //Cleaning
-      'General cleaning',
-      'Floor cleaning or pilishing'
-    ]
-
+        [
+          //Interior fitout
+          'NA',
+        ],
+        [
+          //Maintenance
+          'Painting',
+          'Masoner',
+          'Aluminium',
+          'Gate/Gate Barrier',
+          'Carpentry'
+        ]
       ];
   @override
   String get model => "Model";
@@ -1082,31 +1067,29 @@ class $en extends Localization {
   @override
   String get roomNo => "RoomNo";
   @override
-  String get mapinfo=> "I want to use the map to locate";
+  String get mapinfo => "I want to use the map to locate";
 
   @override
   List<String> get modeltype => [
-
-    'Personal',
-    'Company',
-  ];
+        'Personal',
+        'Company',
+      ];
   @override
-  String get offers=> "Offers";
+  String get offers => "Offers";
   @override
   List<String> get styletype => [
-
-    'Apartment',
-    'Villa',
-  ];
+        'Apartment',
+        'Villa',
+      ];
   @override
-  String get login => 'Login';  @override
+  String get login => 'Login';
+  @override
   String get tocontinue => "To continue your account";
   @override
   String get phoneverification => "Phone Verification";
   @override
-  List<String> get title =>
-      ['BaseInfo', 'Additional', 'Comment'];
-@override
+  List<String> get title => ['BaseInfo', 'Additional', 'Comment'];
+  @override
   String get status => 'Status';
   @override
   List<List<List<String>>> get subInfo => [
@@ -1248,98 +1231,117 @@ class $en extends Localization {
           ],
         ],
         [
-          // Cleaning
+          // Duct
           [
-            'Regular cleaning',
-            'Pre Party cleaning',
-            'Post Party cleaning',
-            'Other(Provide in Instruction Box / attached photo)'
+            'Supply Air Duct',
+            'Return Air Duct',
+            'Fresh Air Duct',
+            'Exhaust Duct'
           ],
           [
-            'Ceramic Tiles',
-            'Marble',
-            'Brick',
-            'Other(Provide in Instruction Box / attached photo)'
+            '1 Unit',
+            '2 Unit',
+            '3 Unit',
+            'To 15 Unit'
+          ],
+          [
+            '1 Unit',
+            '2 Unit',
+            '3 Unit',
+            'To 15 Unit'
+          ],
+          [
+            'NA',
           ]
         ],
-    [
-      // Cleaning
-      [
-        'Regular cleaning',
-        'Pre Party cleaning',
-        'Post Party cleaning',
-        'Other(Provide in Instruction Box / attached photo)'
-      ],
-      [
-        'Ceramic Tiles',
-        'Marble',
-        'Brick',
-        'Other(Provide in Instruction Box / attached photo)'
-      ]
-    ], [
-      // Cleaning
-      [
-        'Regular cleaning',
-        'Pre Party cleaning',
-        'Post Party cleaning',
-        'Other(Provide in Instruction Box / attached photo)'
-      ],
-      [
-        'Ceramic Tiles',
-        'Marble',
-        'Brick',
-        'Other(Provide in Instruction Box / attached photo)'
-      ]
-    ]
+        [
+          // interiour fitout
+          ['NA'],
+        ],
+        [
+          // Maintenance
+          [
+            'Interior Painting',
+            'Exterior Painting',
+            'Texture Painting',
+            'Others'
+          ],
+          [
+            'Block Work',
+            'Plastering',
+            'Tile Fixing',
+            'Water Proofing'
+          ],
+          [
+            'Door',
+            'Window'
+          ],
+          [
+            'Rolling Gate',
+            'Automatic Gate',
+            'Window Gate',
+            'Gate Barrier',
+            'Others'
+          ],
+          [
+            'General'
+          ]
+        ]
       ];
+  @override
+  String get choose_service1 => 'Choose Service That You Need In ';
+  @override
+  String get choose_service2 => 'Your Door Side';
   @override
   String get viewdetail => 'View Detail';
   @override
   List<FAQ> get faq => [
-        new FAQ('What services do we offer?', '''
-We offer over maintenance services within the following service categories - AC, Plumbing, Electrical, House Cleaning, For more details, kindly visit www.eletec.ae .
+    new FAQ('What services do we offer?', '''
+We offer over maintenance services within the following service categories - Plumbing, Electrical, Maintenance, Interior Fitout, duct ,A/C Maintenance, For more details, kindly visit www.eletec.ae .
 '''),
-        new FAQ('How do I book a service?', '''
+    new FAQ('How do I book a service?', '''
 Customers can book a service using the following methods –
 1)Book from our iOS and Android mobile apps.
-2)Or give us a call +971 50 307 0781.
+2)Or give us a call +971 60 059 3323.
 We recommend downloading and using our Android and iOS mobile apps, for the best user end-to-end experience.
 '''),
-        new FAQ('Can I schedule a service for a later date/time?', '''
+    new FAQ('Can I schedule a service for a later date/time?', '''
 Customers can book a Scheduled Service (> 24 hours) offered during standard office hours (8 am to 6 pm) on all working days from Sat to Thu. Such bookings can be scheduled for up to a month in advance. 
 '''),
-        new FAQ(
-            'Are the services available after office hours or Friday or Public Holiday?',
-            '''
+    new FAQ(
+        'Are the services available after office hours or Friday or Public Holiday?',
+        '''
 Yes. Our Scheduled Services are offered on Friday or Public Holidays. But there will be a AED200 charge.
 '''),
-        new FAQ('What is a Same Day Service on the mobile app?', '''
+    new FAQ('What is a Same Day Service on the mobile app?', '''
 We offer Same Day Services, for anyone who is flexible on the timing but wants the Service within the day. The same day service does not come with a fixed arrival time commitment but with earliest availability option, within office hours (8 am to 6 pm) on the same day, possibility. You can select on mobile app, to book a Same Day Service. Also, note the Same Day service can only be booked before 12 noon.
 '''),
-        new FAQ('Do we offer contracts?', '''
-Yes, we have contracts for Annual Maintenance Contracts, which we have 4 options (Economy, Standard, Premium, and Customized Package) as per the client needs. You can find the details in our mobile app, or you can or give us a call +971 50 307 0781.
+    new FAQ('Do we offer contracts?', '''
+Yes, we have contracts for Annual Maintenance Contracts, which we have 4 options (Economy, Standard, Premium, and Customized Package) as per the client needs. You can find the details in our mobile app, or you can or give us a call +971 60 059 3323.
 '''),
-        new FAQ('Please explain the 7 Day Service Warranty', '''
+    new FAQ('Please explain the 7 Day Service Warranty', '''
 For every service we deliver, we offer a 7-day service warranty which means that if what we fixed is reported faulty again within 7 calendar days, we will come back and try to fix it for free. In case the issue is with the parts and materials, any return on that will be dependent on the warranty that comes from the supplier. Generally parts do not come with a warranty when bought standalone. Also, our Service Warranty is for repair and installation jobs only.
 '''),
-        new FAQ(
-            'How can I reach my assigned Technician after he has been assigned to me?',
-            '''
-Once a Genie has been assigned to a customer, a customer can call the Supervisor of the by calling the number provided in the mobile app. This avoids the hassle of saving numbers for a professional every time you take a home maintenance service. There is no direct calling enabled between the technician and the customer.
+    new FAQ(
+        'How can I reach my assigned Technician after he has been assigned to me?',
+        '''
+There is no direct calling enabled between the technician and the customer. Once a Genie has been assigned to a customer, a customer can call the Supervisor of the by calling the number provided in the mobile app. This avoids the hassle of saving numbers for a professional every time you take a home maintenance service.
 '''),
-        new FAQ('Can I cancel a booking?', '''
+    new FAQ('Can I cancel a booking?', '''
 To cancel a booking, a customer needs to either call or cancel the booking from the app, by clicking on the delete button. For details on cancellation policy, please refer our policy.
 '''),
-        new FAQ('Can I reschedule a booking?', '''
-You can reschedule a service, following a discussion with the assigned Supervisor of the technician.
+    new FAQ('Can I reschedule a booking?', '''
+You can reschedule the booking calling to the toll free number (+971 60 059 3323.) of the company line.
 '''),
-        new FAQ('How and when do I pay for a service?', '''
+    new FAQ('How and when do I pay for a service?', '''
 You can pay for a service by a credit card/ debit card, account transfer or in cash upon completion of your job or as advance if the job requires an advance payment. Advance payment is generally required for jobs which need procurement of parts and materials.
 '''),
-        new FAQ('How can I leave feedback or raise a complaint?', '''
-As a customer, you can evaluate or leave a feedback from the mobile app: Bookings -> Select booked service -> Below you will find Evaluation, select the necessary option from Not Satisfied to Very Satisfied and you can optional write you comment and click Save.
+    new FAQ('How can I leave feedback or raise a complaint?', '''
+As a customer you can evaluate or leave a feedback from the mobile app: booking ->booking
+history ->below you will find three section of basic info- additional-comment
+Choose comet option for giving rating and feedback
 '''),
-      ];
+  ];
 }
 
 class GeneratedLocalizationsDelegate

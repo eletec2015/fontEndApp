@@ -15,10 +15,10 @@ AppImage _$AppImageFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$AppImageToJson(AppImage instance) => <String, dynamic>{
-      'full': instance.full,
-      'banner': instance.banner,
-      'advertising': instance.advertising,
-    };
+  'full': instance.full,
+  'banner': instance.banner,
+  'advertising': instance.advertising,
+};
 
 App _$AppFromJson(Map<String, dynamic> json) {
   return App(
@@ -33,13 +33,13 @@ App _$AppFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$AppToJson(App instance) => <String, dynamic>{
-      'id': instance.id,
-      'image': instance.image,
-      'sorter': instance.sorter,
-      'tag': instance.tag,
-      'app_size': instance.app_size,
-      'create_at': instance.create_at,
-    };
+  'id': instance.id,
+  'image': instance.image,
+  'sorter': instance.sorter,
+  'tag': instance.tag,
+  'app_size': instance.app_size,
+  'create_at': instance.create_at,
+};
 
 Otp _$OtpFromJson(Map<String, dynamic> json) {
   return Otp(
@@ -48,8 +48,8 @@ Otp _$OtpFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$OtpToJson(Otp instance) => <String, dynamic>{
-      'phone_number': instance.phone_number,
-    };
+  'phone_number': instance.phone_number,
+};
 
 Token _$TokenFromJson(Map<String, dynamic> json) {
   return Token(
@@ -60,10 +60,10 @@ Token _$TokenFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$TokenToJson(Token instance) => <String, dynamic>{
-      'id': instance.id,
-      'last_login': instance.last_login,
-      'token': instance.token,
-    };
+  'id': instance.id,
+  'last_login': instance.last_login,
+  'token': instance.token,
+};
 
 Order _$OrderFromJson(Map<String, dynamic> json) {
   return Order(
@@ -79,14 +79,14 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
     orderID: json['orderID'] as String,
     images: (json['images'] as List)
         ?.map((e) =>
-            e == null ? null : SourceImage.fromJson(e as Map<String, dynamic>))
+    e == null ? null : SourceImage.fromJson(e as Map<String, dynamic>))
         ?.toList(),
     jobs: (json['jobs'] as List)
         ?.map((e) => e == null ? null : Job.fromJson(e as Map<String, dynamic>))
         ?.toList(),
     comments: (json['comments'] as List)
         ?.map((e) =>
-            e == null ? null : Comment.fromJson(e as Map<String, dynamic>))
+    e == null ? null : Comment.fromJson(e as Map<String, dynamic>))
         ?.toList(),
     status: json['status'] as int,
     service: json['service'] as int,
@@ -105,29 +105,29 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$OrderToJson(Order instance) => <String, dynamic>{
-      'id': instance.id,
-      'user': instance.user,
-      'user_id': instance.user_id,
-      'contract': instance.contract,
-      'contract_id': instance.contract_id,
-      'orderID': instance.orderID,
-      'images': instance.images,
-      'jobs': instance.jobs,
-      'comments': instance.comments,
-      'status': instance.status,
-      'service': instance.service,
-      'main_info': instance.main_info,
-      'sub_info': instance.sub_info,
-      'from_date': instance.from_date,
-      'to_date': instance.to_date,
-      'code': instance.code,
-      'address': instance.address,
-      'lat': instance.lat,
-      'lng': instance.lng,
-      'create_at': instance.create_at,
-      'change_at': instance.change_at,
-      'deleted': instance.deleted,
-    };
+  'id': instance.id,
+  'user': instance.user,
+  'user_id': instance.user_id,
+  'contract': instance.contract,
+  'contract_id': instance.contract_id,
+  'orderID': instance.orderID,
+  'images': instance.images,
+  'jobs': instance.jobs,
+  'comments': instance.comments,
+  'status': instance.status,
+  'service': instance.service,
+  'main_info': instance.main_info,
+  'sub_info': instance.sub_info,
+  'from_date': instance.from_date,
+  'to_date': instance.to_date,
+  'code': instance.code,
+  'address': instance.address,
+  'lat': instance.lat,
+  'lng': instance.lng,
+  'create_at': instance.create_at,
+  'change_at': instance.change_at,
+  'deleted': instance.deleted,
+};
 
 OrderList _$OrderListFromJson(Map<String, dynamic> json) {
   return OrderList()
@@ -140,10 +140,10 @@ OrderList _$OrderListFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$OrderListToJson(OrderList instance) => <String, dynamic>{
-      'totalCount': instance.totalCount,
-      'pageNo': instance.pageNo,
-      'data': instance.data,
-    };
+  'totalCount': instance.totalCount,
+  'pageNo': instance.pageNo,
+  'data': instance.data,
+};
 
 User _$UserFromJson(Map<String, dynamic> json) {
   return User()
@@ -160,23 +160,23 @@ User _$UserFromJson(Map<String, dynamic> json) {
         : EmailAddress.fromJson(json['email'] as Map<String, dynamic>)
     ..role = json['role'] as int
     ..photo = (json['photo'] as Map<String, dynamic>)?.map(
-      (k, e) => MapEntry(k, e as String),
+          (k, e) => MapEntry(k, e as String),
     );
 }
 
 Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
-      'id': instance.id,
-      'username': instance.username,
-      'name': instance.name,
-      'first_name': instance.first_name,
-      'last_name': instance.last_name,
-      'is_staff': instance.is_staff,
-      'is_active': instance.is_active,
-      'is_superuser': instance.is_superuser,
-      'email': instance.email,
-      'role': instance.role,
-      'photo': instance.photo,
-    };
+  'id': instance.id,
+  'username': instance.username,
+  'name': instance.name,
+  'first_name': instance.first_name,
+  'last_name': instance.last_name,
+  'is_staff': instance.is_staff,
+  'is_active': instance.is_active,
+  'is_superuser': instance.is_superuser,
+  'email': instance.email,
+  'role': instance.role,
+  'photo': instance.photo,
+};
 
 EmailAddress _$EmailAddressFromJson(Map<String, dynamic> json) {
   return EmailAddress()
@@ -197,9 +197,9 @@ Visit _$VisitFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$VisitToJson(Visit instance) => <String, dynamic>{
-      'service': instance.service,
-      'count': instance.count,
-    };
+  'service': instance.service,
+  'count': instance.count,
+};
 
 Contract _$ContractFromJson(Map<String, dynamic> json) {
   return Contract()
@@ -217,15 +217,15 @@ Contract _$ContractFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$ContractToJson(Contract instance) => <String, dynamic>{
-      'id': instance.id,
-      'contractID': instance.contractID,
-      'option': instance.option,
-      'issue_date': instance.issue_date,
-      'expiry_date': instance.expiry_date,
-      'address': instance.address,
-      'remark': instance.remark,
-      'visits': instance.visits,
-    };
+  'id': instance.id,
+  'contractID': instance.contractID,
+  'option': instance.option,
+  'issue_date': instance.issue_date,
+  'expiry_date': instance.expiry_date,
+  'address': instance.address,
+  'remark': instance.remark,
+  'visits': instance.visits,
+};
 
 ContractList _$ContractListFromJson(Map<String, dynamic> json) {
   return ContractList()
@@ -233,7 +233,7 @@ ContractList _$ContractListFromJson(Map<String, dynamic> json) {
     ..pageNo = json['pageNo'] as int
     ..data = (json['data'] as List)
         ?.map((e) =>
-            e == null ? null : Contract.fromJson(e as Map<String, dynamic>))
+    e == null ? null : Contract.fromJson(e as Map<String, dynamic>))
         ?.toList();
 }
 
@@ -256,14 +256,14 @@ Job _$JobFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$JobToJson(Job instance) => <String, dynamic>{
-      'id': instance.id,
-      'jobID': instance.jobID,
-      'date': instance.date,
-      'card': instance.card,
-      'unit': instance.unit,
-      'remark': instance.remark,
-      'order_id': instance.order_id,
-    };
+  'id': instance.id,
+  'jobID': instance.jobID,
+  'date': instance.date,
+  'card': instance.card,
+  'unit': instance.unit,
+  'remark': instance.remark,
+  'order_id': instance.order_id,
+};
 
 JobList _$JobListFromJson(Map<String, dynamic> json) {
   return JobList()
@@ -275,10 +275,10 @@ JobList _$JobListFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$JobListToJson(JobList instance) => <String, dynamic>{
-      'totalCount': instance.totalCount,
-      'pageNo': instance.pageNo,
-      'data': instance.data,
-    };
+  'totalCount': instance.totalCount,
+  'pageNo': instance.pageNo,
+  'data': instance.data,
+};
 
 Address _$AddressFromJson(Map<String, dynamic> json) {
   return Address(
@@ -300,27 +300,27 @@ Address _$AddressFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$AddressToJson(Address instance) => <String, dynamic>{
-      'id': instance.id,
-      'defAddr': instance.defAddr,
-      'onMap': instance.onMap,
-      'model': instance.model,
-      'style': instance.style,
-      'city': instance.city,
-      'community': instance.community,
-      'street': instance.street,
-      'building': instance.building,
-      'roomNo': instance.roomNo,
-      'lat': instance.lat,
-      'lng': instance.lng,
-      'address': instance.address,
-      'user_id': instance.user_id,
-    };
+  'id': instance.id,
+  'defAddr': instance.defAddr,
+  'onMap': instance.onMap,
+  'model': instance.model,
+  'style': instance.style,
+  'city': instance.city,
+  'community': instance.community,
+  'street': instance.street,
+  'building': instance.building,
+  'roomNo': instance.roomNo,
+  'lat': instance.lat,
+  'lng': instance.lng,
+  'address': instance.address,
+  'user_id': instance.user_id,
+};
 
 SourceImage _$SourceImageFromJson(Map<String, dynamic> json) {
   return SourceImage()
     ..id = json['id'] as int
     ..image = (json['image'] as Map<String, dynamic>)?.map(
-      (k, e) => MapEntry(k, e as String),
+          (k, e) => MapEntry(k, e as String),
     )
     ..tag = json['tag'] as String
     ..content_type = json['content_type'] as String
@@ -349,7 +349,7 @@ Comment _$CommentFromJson(Map<String, dynamic> json) {
         : User.fromJson(json['user'] as Map<String, dynamic>)
     ..child = (json['child'] as List)
         ?.map((e) =>
-            e == null ? null : Comment.fromJson(e as Map<String, dynamic>))
+    e == null ? null : Comment.fromJson(e as Map<String, dynamic>))
         ?.toList()
     ..content_type = json['content_type'] as String
     ..object_id = json['object_id'] as int
@@ -357,18 +357,18 @@ Comment _$CommentFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$CommentToJson(Comment instance) => <String, dynamic>{
-      'id': instance.id,
-      'comment': instance.comment,
-      'rating': instance.rating,
-      'read': instance.read,
-      'image': instance.image,
-      'create_at': instance.create_at,
-      'user': instance.user,
-      'child': instance.child,
-      'content_type': instance.content_type,
-      'object_id': instance.object_id,
-      'user_id': instance.user_id,
-    };
+  'id': instance.id,
+  'comment': instance.comment,
+  'rating': instance.rating,
+  'read': instance.read,
+  'image': instance.image,
+  'create_at': instance.create_at,
+  'user': instance.user,
+  'child': instance.child,
+  'content_type': instance.content_type,
+  'object_id': instance.object_id,
+  'user_id': instance.user_id,
+};
 
 // **************************************************************************
 // RetrofitGenerator
@@ -377,7 +377,7 @@ Map<String, dynamic> _$CommentToJson(Comment instance) => <String, dynamic>{
 class _RestService implements RestService {
   _RestService(this._dio, {this.baseUrl}) {
     ArgumentError.checkNotNull(_dio, '_dio');
-    this.baseUrl ??= 'http://hassanrehman.pythonanywhere.com/api/';
+    this.baseUrl ??= 'http://www.eletecapp.com/api/';
   }
 
   final Dio _dio;
@@ -863,5 +863,11 @@ class _RestService implements RestService {
         data: _data);
     final value = EmailAddress.fromJson(_result.data);
     return value;
+  }
+
+  @override
+  Future<ProfileDetails> getProfileDetail({Map<String, dynamic> query}) {
+    // TODO: implement getProfileDetail
+    throw UnimplementedError();
   }
 }

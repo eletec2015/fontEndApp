@@ -67,7 +67,7 @@ class _EletecAppState extends State<EletecApp> {
               //   Theme.of(context).textTheme,
               // ),
               // fontFamily: GoogleFonts.getFont('Paprika').fontFamily,
-              fontFamily: GoogleFonts.getFont('Righteous').fontFamily,
+              fontFamily: 'Amiko',
               highlightColor: Colors.blueAccent,
               hoverColor: Colors.blueAccent.withOpacity(0.04),
               splashColor: Colors.blueAccent),

@@ -84,9 +84,9 @@ class Order extends Equatable {
 
 @JsonSerializable()
 class OrderList extends Equatable {
+
   int totalCount;
   int pageNo;
-
   List<Order> data;
 
   static OrderList fromJson(Map<String, dynamic> json) =>

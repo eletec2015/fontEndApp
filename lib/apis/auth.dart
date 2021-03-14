@@ -31,3 +31,5 @@ class Token extends Equatable {
       _$TokenFromJson(json);
   Map<String, dynamic> toJson() => _$TokenToJson(this);
 }
+
+

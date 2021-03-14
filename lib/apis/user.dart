@@ -36,6 +36,31 @@ class User extends Equatable {
       ];
 }
 
+class ProfileDetails {
+  int id;
+  String first_name;
+  String last_name;
+  String email;
+  int gender;
+  String phone_number;
+
+  ProfileDetails({this.id, this.first_name, this.last_name,this.email, this.gender, this.phone_number});
+
+  factory ProfileDetails.fromJson(Map<String, dynamic> json) {
+    return ProfileDetails(
+      id: json['id'],
+      first_name: json['first_name'],
+      last_name: json['last_name'],
+      email: json['email'],
+      gender: json['gender'],
+      phone_number: json['phone_number'],
+    );
+  }
+}
+
+
+
+
 @JsonSerializable()
 class EmailAddress extends Equatable {
   String email;

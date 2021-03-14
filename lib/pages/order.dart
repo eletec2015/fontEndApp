@@ -6,11 +6,13 @@ import 'package:bookservice/bloc/addition_bloc.dart';
 import 'package:bookservice/bloc/app_bloc.dart';
 import 'package:bookservice/bloc/comment_bloc.dart';
 import 'package:bookservice/bloc/order_bloc.dart';
+import 'package:bookservice/constanc.dart';
 import 'package:bookservice/router/router.gr.dart';
 import 'package:bookservice/views/date_time/any_field_bloc_builder.dart';
 import 'package:bookservice/views/dialog.dart';
 import 'package:bookservice/views/ifnone_widget.dart';
 import 'package:bookservice/views/modal.dart';
+import 'package:dio/dio.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flashy_tab_bar/flashy_tab_bar.dart';
 import 'package:flutter/cupertino.dart';
@@ -23,7 +25,8 @@ import 'package:flutter_form_bloc/src/utils/style.dart' as IStyle;
 import 'package:photo_view/photo_view.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:bookservice/views/date_time/date_time_field_bloc_builder.dart'
-as _IL;
+    as _IL;
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 // ignore_for_file: close_sinks
 // ignore_for_file: implementation_imports
@@ -35,51 +38,64 @@ class OrderListPage extends StatefulWidget {
 }
 
 class _OrderListPageState extends State<OrderListPage> {
+  static const _pageSize = 20;
+
+  final PagingController<int, Order> _pagingController =
+      PagingController(firstPageKey: 0);
+
+  @override
+  void initState() {
+    _pagingController.addPageRequestListener((pageKey) {
+      _fetchPage(pageKey);
+    });
+    super.initState();
+  }
+
+  Future<void> _fetchPage(int pageKey) async {
+    try {
+      print(pageKey);
+      final newItems = await RestService.instance.getOrders(query: {
+        'pageNo': pageKey + 1,
+        'pageSize': _pageSize,
+        'sorter': '-id'
+      });
+      final isLastPage = newItems.data.length < _pageSize;
+      if (isLastPage) {
+        _pagingController.appendLastPage(newItems.data);
+      } else {
+        final nextPageKey = pageKey + newItems.data.length;
+        _pagingController.appendPage(newItems.data, nextPageKey);
+      }
+    } catch (error) {
+      print('Error while fetching orders $error');
+      _pagingController.error = error;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<OrderListBloc, OrderListState>(
-        builder: (context, state) {
-          OrderListBloc bloc = BlocProvider.of<OrderListBloc>(context);
+      builder: (context, state) {
+        OrderListBloc bloc = BlocProvider.of<OrderListBloc>(context);
 
-          return SmartRefresher(
-            enablePullDown: true,
-            enablePullUp: state.list.length < state.totalCount,
-            header: WaterDropHeader(),
-            footer: CustomFooter(
-              builder: (BuildContext context, LoadStatus mode) {
-                Widget body;
-                if (mode == LoadStatus.idle) {
-                  body = Text("pull up load");
-                } else if (mode == LoadStatus.loading) {
-                  body = CupertinoActivityIndicator();
-                } else if (mode == LoadStatus.failed) {
-                  body = Text("Load Failed!Click retry!");
-                } else if (mode == LoadStatus.canLoading) {
-                  body = Text("release to load more");
-                } else {
-                  body = Text("No more Data");
-                }
-                return Container(
-                  height: 55.0,
-                  child: Center(child:  Container(
-                    child: OrderListPage(),
-                  ),),
-                );
-              },
-            ),
-            controller: bloc.refreshController,
-            onRefresh: () => bloc.add(RefreshOrderList()),
-            onLoading: () => bloc.add(LoadOrderList()),
-            child: ListView.separated(
+        return PagedListView<int, Order>(
+          pagingController: _pagingController,
+          builderDelegate: PagedChildBuilderDelegate<Order>(
+            itemBuilder: (context, item, i) => Container(
               padding: const EdgeInsets.symmetric(horizontal: 8),
-              separatorBuilder: (_, index) => SizedBox(
-                height: 20,
+              child: Column(
+                children: [
+                  OrderListItem(order: item),
+                  SizedBox(
+                    height: 10,
+                  ),
+                ],
               ),
-              itemBuilder: (c, i) => OrderListItem(order: state.list[i]),
-              itemCount: state.list.length,
             ),
-          );
-        });
+          ),
+        );
+      },
+    );
   }
 }
 
@@ -99,7 +115,6 @@ class OrderListItem extends StatelessWidget {
       'assets/images/plumbingg.png',
       'assets/images/general_maintenanceing.png',
       'assets/images/interior_fitoutsing.png',
-
     ];
 
     return GestureDetector(
@@ -112,9 +127,10 @@ class OrderListItem extends StatelessWidget {
                 color: Colors.white,
                 fontFamily: GoogleFonts.getFont('Righteous').fontFamily),
             child: Container(
+              margin: EdgeInsets.only(top: 5),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(10)),
-                    border: Border.all(color: Colors.blue, width: 1),
+                    border: Border.all(color: Color(0xFF213c56), width: 1),
                     shape: BoxShape.rectangle,
                     color: Colors.white,
                     boxShadow: [
@@ -129,9 +145,9 @@ class OrderListItem extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(horizontal: 8),
                         decoration: BoxDecoration(
                           borderRadius:
-                          BorderRadius.vertical(top: Radius.circular(8)),
+                              BorderRadius.vertical(top: Radius.circular(8)),
                           shape: BoxShape.rectangle,
-                          color: bgColor[400],
+                          color: Color(0xFF213c56),
                         ),
                         child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -149,7 +165,45 @@ class OrderListItem extends StatelessWidget {
                               '${Localization.of(context).mainInfo[order.service][order.main_info]}'),
                           subtitle: Text(
                               '${Localization.of(context).subInfo[order.service][order.main_info][order.sub_info]} \n${order.create_at}'),
-                        ))
+                        )),
+                    Container(
+                      margin: EdgeInsets.only(right: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          RaisedButton(
+                            onPressed: Localization.of(context)
+                                        .orderStatus[order.status] !=
+                                    Localization.of(context).orderStatus[1]
+                                ? () async {
+                                    // delete api call
+                                    try {
+                                      await Dio().post(
+                                        Constant.Host +
+                                            'orders/${order.orderID}/set_delete/',
+                                        data: {'deleted': true},
+                                        options: Options(
+                                          headers: {
+                                            "Authorization":
+                                                'token ${await CacheService.instance.getToken()}', // set content-length
+                                          },
+                                        ),
+                                      );
+
+                                      OrderListBloc bloc =
+                                          BlocProvider.of<OrderListBloc>(
+                                              context);
+                                      bloc.refreshController.requestRefresh();
+                                    } catch (e) {
+                                      print('error while deleting order $e');
+                                    }
+                                  }
+                                : null,
+                            child: Text('Delete'),
+                          ),
+                        ],
+                      ),
+                    )
                   ],
                 ))));
   }
@@ -175,8 +229,7 @@ class _OrderPostPageState extends State<OrderPostPage> {
       return Builder(
         builder: (context) {
           OrderFormBloc formBloc = BlocProvider.of<OrderFormBloc>(context);
-          print("hasham is a disco");
-          print(formBloc.status);
+          print("basic info ${widget.data.id} $post");
           DateTime dateTime = DateTime.now();
           Widget body = FormBlocListener<OrderFormBloc, String, String>(
               onSubmitting: (context, state) {
@@ -187,7 +240,7 @@ class _OrderPostPageState extends State<OrderPostPage> {
                 if (formBloc.nextStep) {
                   context.navigator.replace('/addition/post',
                       arguments:
-                      AdditionPostPageArguments(postId: formBloc.data.id));
+                          AdditionPostPageArguments(postId: formBloc.data.id));
                 } else {
                   context.navigator.pop();
                 }
@@ -203,37 +256,49 @@ class _OrderPostPageState extends State<OrderPostPage> {
                     visible: !post,
                     child: DropdownFieldBlocBuilder(
                       showEmptyItem: false,
-                      isEnabled: false,
                       decoration: InputDecoration(
-                          labelText:  Localization.of(context).status, border: OutlineInputBorder()),
+                          labelText: Localization.of(context).status,
+                          border: OutlineInputBorder()),
                       itemBuilder: (context, value) =>
-                      Localization.of(context).orderStatus[value],
-                     // selectFieldBloc: formBloc.status,
+                          Localization.of(context).orderStatus[value],
+                      // selectFieldBloc: formBloc.status,
                     ),
                   ),
                   DropdownFieldBlocBuilder(
                     showEmptyItem: false,
-                    isEnabled: post,
+                    isEnabled: Localization.of(context)
+                                .orderStatus[widget.data.status] !=
+                            Localization.of(context).orderStatus[
+                                1], // status not equal to confirmed,
                     decoration: InputDecoration(
-                        labelText:  Localization.of(context).service, border: OutlineInputBorder()),
+                        labelText: Localization.of(context).service,
+                        border: OutlineInputBorder()),
                     itemBuilder: (context, value) =>
-                    Localization.of(context).serviceType[value],
+                        Localization.of(context).serviceType[value],
                     selectFieldBloc: formBloc.service,
                   ),
                   DropdownFieldBlocBuilder(
                     showEmptyItem: false,
-                    isEnabled: post,
+                    isEnabled: Localization.of(context)
+                                .orderStatus[widget.data.status] !=
+                            Localization.of(context).orderStatus[
+                                1], // status not equal to confirmed,
                     decoration: InputDecoration(
-                        labelText: Localization.of(context).maininfo, border: OutlineInputBorder()),
+                        labelText: Localization.of(context).maininfo,
+                        border: OutlineInputBorder()),
                     itemBuilder: (context, value) => Localization.of(context)
                         .mainInfo[value.service][value.main],
                     selectFieldBloc: formBloc.main_info,
                   ),
                   DropdownFieldBlocBuilder(
                     showEmptyItem: false,
-                    isEnabled: post,
+                    isEnabled: Localization.of(context)
+                                .orderStatus[widget.data.status] !=
+                            Localization.of(context).orderStatus[
+                                1], // status not equal to confirmed,
                     decoration: InputDecoration(
-                        labelText: Localization.of(context).subinfo, border: OutlineInputBorder()),
+                        labelText: Localization.of(context).subinfo,
+                        border: OutlineInputBorder()),
                     itemBuilder: (context, value) => Localization.of(context)
                         .subInfo[value.service][value.main][value.sub],
                     selectFieldBloc: formBloc.sub_info,
@@ -241,10 +306,14 @@ class _OrderPostPageState extends State<OrderPostPage> {
                   AnyFieldBlocBuilder<Address>(
                       inputFieldBloc: formBloc.address,
                       onPick: showAddressPickModal,
-                      isEnabled: post,
+                      isEnabled: Localization.of(context)
+                                  .orderStatus[widget.data.status] !=
+                              Localization.of(context).orderStatus[
+                                  1], // status not equal to confirmed,
                       showClearIcon: post,
                       decoration: InputDecoration(
-                          labelText: Localization.of(context).address, border: OutlineInputBorder()),
+                          labelText: Localization.of(context).address,
+                          border: OutlineInputBorder()),
                       builder: (context, state) {
                         return Text(
                           state?.value?.address ?? 'hassan',
@@ -253,14 +322,17 @@ class _OrderPostPageState extends State<OrderPostPage> {
                           softWrap: true,
                           style: IStyle.Style.getDefaultTextStyle(
                             context: context,
-                            isEnabled: post,
+                            isEnabled: true,
                           ),
                         );
                       }),
                   _IL.DateTimeFieldBlocBuilder(
                     dateTimeFieldBloc: formBloc.from_date,
                     canSelectTime: true,
-                    isEnabled: post,
+                    isEnabled: Localization.of(context)
+                                .orderStatus[widget.data.status] !=
+                            Localization.of(context).orderStatus[
+                                1], // status not equal to confirmed,
                     showClearIcon: false,
                     format: DateFormat('yyyy-MM-dd HH:mm'),
                     initialDate: DateTime(
@@ -277,7 +349,10 @@ class _OrderPostPageState extends State<OrderPostPage> {
                   _IL.DateTimeFieldBlocBuilder(
                     dateTimeFieldBloc: formBloc.to_date,
                     canSelectTime: true,
-                    isEnabled: post,
+                    isEnabled: Localization.of(context)
+                                .orderStatus[widget.data.status] !=
+                            Localization.of(context).orderStatus[
+                                1], // status not equal to confirmed,
                     showClearIcon: false,
                     format: DateFormat('yyyy-MM-dd HH:mm'),
                     initialDate: DateTime(
@@ -287,7 +362,7 @@ class _OrderPostPageState extends State<OrderPostPage> {
                     lastDate: DateTime(
                         dateTime.year, dateTime.month, dateTime.day + 30),
                     decoration: InputDecoration(
-                        labelText:Localization.of(context).Todate,
+                        labelText: Localization.of(context).Todate,
                         prefixIcon: Icon(Icons.calendar_today),
                         border: OutlineInputBorder()),
                   ),
@@ -301,18 +376,66 @@ class _OrderPostPageState extends State<OrderPostPage> {
                         formBloc.submit();
                       },
                     ),
-                  )
+                  ),
+                  Visibility(
+                    visible: !post &&
+                        Localization.of(context)
+                                .orderStatus[widget.data.status] !=
+                            Localization.of(context).orderStatus[
+                                1], // status not equal to confirmed
+                    child: RaisedButton(
+                      child: Text('Update'),
+                      onPressed: () async {
+                        // TODO: call update api
+                        LoadingDialog.show(context);
+                        final putData = {
+                          'service': formBloc.service.value,
+                          'main_info': formBloc.main_info.value.main,
+                          'sub_info': formBloc.sub_info.value.sub,
+                          'address': formBloc.address.value.address ??
+                              formBloc.address.value.toTitle,
+                          'user_id':
+                              BlocProvider.of<AppBloc>(context).state.user.id,
+                          'from_date': DateFormat('yyyy-MM-dd HH:mm:ss')
+                              .format(formBloc.from_date.value),
+                          'to_date': DateFormat('yyyy-MM-dd HH:mm:ss')
+                              .format(formBloc.to_date.value)
+                        };
+                        print(putData);
+                        try {
+                          await Dio().put(
+                            Constant.Host +
+                                'orders/${widget.data.id}/ord_update',
+                            data: putData,
+                            options: Options(
+                              headers: {
+                                "Authorization":
+                                    'token ${await CacheService.instance.getToken()}', // set content-length
+                              },
+                            ),
+                          );
+                          LoadingDialog.hide(context);
+                          context.navigator.pop();
+                        } catch (e) {
+                          LoadingDialog.hide(context);
+                          print('error while updating order $e');
+                        }
+                      },
+                    ),
+                  ),
                 ],
               ));
 
           return post
               ? Scaffold(
-            backgroundColor: Colors.white,
-              key: _scaffoldKey,
-              appBar: AppBar(
-                title: Text('Order New',style:TextStyle(color: Colors.white,fontFamily: "Amiko")),
-              ),
-              body: body)
+                  backgroundColor: Colors.white,
+                  key: _scaffoldKey,
+                  appBar: AppBar(
+                    title: Text('Order New',
+                        style: TextStyle(
+                            color: Colors.white, fontFamily: "Amiko")),
+                  ),
+                  body: body)
               : body;
         },
       );
@@ -502,9 +625,9 @@ class _OrderCommentPageState extends State<OrderCommentPage> {
                           borderRadius: BorderRadius.all(Radius.circular(32)),
                           image: DecorationImage(
                               image: state.list[i].user?.photo['thumbnail'] !=
-                                  null
+                                      null
                                   ? NetworkImage(
-                                  state.list[i].user?.photo['thumbnail'])
+                                      state.list[i].user?.photo['thumbnail'])
                                   : ExactAssetImage('assets/images/user.png')),
                         )),
                     title: RichText(
@@ -522,7 +645,7 @@ class _OrderCommentPageState extends State<OrderCommentPage> {
                                   .style
                                   .copyWith(color: Colors.grey[600]),
                               text:
-                              '${state.list[i].user.name}  ${state.list[i].create_at}'),
+                                  '${state.list[i].user.name}  ${state.list[i].create_at}'),
                         ],
                       ),
                     ),
@@ -534,7 +657,7 @@ class _OrderCommentPageState extends State<OrderCommentPage> {
                       itemSize: 24,
                       unratedColor: Colors.grey,
                       itemPadding:
-                      EdgeInsets.symmetric(horizontal: 1.0, vertical: 12),
+                          EdgeInsets.symmetric(horizontal: 1.0, vertical: 12),
                       itemBuilder: (context, _) => Icon(
                         Icons.star,
                         color: Colors.amber,
@@ -545,7 +668,7 @@ class _OrderCommentPageState extends State<OrderCommentPage> {
                       icon: Icon(Icons.reply),
                       onPressed: () {
                         showCommentModal(context, state.list[i].id, 'comment',
-                            reply: state.list[i])
+                                reply: state.list[i])
                             .then((value) {
                           if (value != null && value) {
                             bloc.add(CommentRefreshList(widget.data.id));
@@ -568,15 +691,15 @@ class _OrderCommentPageState extends State<OrderCommentPage> {
                                   decoration: BoxDecoration(
                                     shape: BoxShape.rectangle,
                                     borderRadius:
-                                    BorderRadius.all(Radius.circular(32)),
+                                        BorderRadius.all(Radius.circular(32)),
                                     image: DecorationImage(
                                         image: state.list[i].user
-                                            ?.photo['thumbnail'] !=
-                                            null
+                                                    ?.photo['thumbnail'] !=
+                                                null
                                             ? NetworkImage(state.list[i].user
-                                            ?.photo['thumbnail'])
+                                                ?.photo['thumbnail'])
                                             : ExactAssetImage(
-                                            'assets/images/user.png')),
+                                                'assets/images/user.png')),
                                   )),
                               title: Text('${e.comment}'),
                               subtitle: Text('${e.user.name}  ${e.create_at}'));
@@ -615,7 +738,7 @@ class _OrderCommentPostPageState extends State<OrderCommentPostPage> {
         child: Builder(
           builder: (context) {
             CommentFormBloc formBloc =
-            BlocProvider.of<CommentFormBloc>(context);
+                BlocProvider.of<CommentFormBloc>(context);
             return FormBlocListener<CommentFormBloc, String, String>(
               onSubmitting: (context, state) {
                 LoadingDialog.show(context);
@@ -644,15 +767,15 @@ class _OrderCommentPostPageState extends State<OrderCommentPostPage> {
                                   decoration: BoxDecoration(
                                     shape: BoxShape.rectangle,
                                     borderRadius:
-                                    BorderRadius.all(Radius.circular(32)),
+                                        BorderRadius.all(Radius.circular(32)),
                                     image: DecorationImage(
                                         image: widget.reply.user
-                                            ?.photo['thumbnail'] !=
-                                            null
+                                                    ?.photo['thumbnail'] !=
+                                                null
                                             ? NetworkImage(widget
-                                            .reply.user?.photo['thumbnail'])
+                                                .reply.user?.photo['thumbnail'])
                                             : ExactAssetImage(
-                                            'assets/images/user.png')),
+                                                'assets/images/user.png')),
                                   )),
                               title: Text(widget.reply.comment),
                               subtitle: Text(
@@ -681,7 +804,7 @@ class _OrderCommentPostPageState extends State<OrderCommentPostPage> {
                                     itemCount: 5,
                                     unratedColor: Colors.grey,
                                     itemPadding:
-                                    EdgeInsets.symmetric(horizontal: 4.0),
+                                        EdgeInsets.symmetric(horizontal: 4.0),
                                     itemBuilder: (context, _) => Icon(
                                       Icons.star,
                                       color: Colors.amber,
@@ -756,6 +879,7 @@ class _OrderPageState extends State<OrderPage> {
                 IconButton(
                     icon: Icon(Icons.add),
                     onPressed: () {
+                      // TODO: handle image upload here
                       showImagePostModal(context, widget.data.id).then((value) {
                         if (value != null && value) {
                           additionBloc.add(AdditionRefreshList(widget.data.id));
@@ -782,7 +906,11 @@ class _OrderPageState extends State<OrderPage> {
           return [];
         }
 
-        List<String> title = [Localization.of(context).title[0], Localization.of(context).title[1], Localization.of(context).title[2]];
+        List<String> title = [
+          Localization.of(context).title[0],
+          Localization.of(context).title[1],
+          Localization.of(context).title[2]
+        ];
 
         List<Widget> pages() {
           return [
@@ -833,17 +961,24 @@ class _OrderPageState extends State<OrderPage> {
                 return Builder(
                   builder: (context) {
                     AdditionBloc additionBloc =
-                    BlocProvider.of<AdditionBloc>(context);
+                        BlocProvider.of<AdditionBloc>(context);
                     CommentBloc commentBloc =
-                    BlocProvider.of<CommentBloc>(context);
+                        BlocProvider.of<CommentBloc>(context);
                     return Scaffold(
-                        appBar: AppBar(   backgroundColor: Color(0xFF213c56),
+                        appBar: AppBar(
+                          backgroundColor: Color(0xFF213c56),
                           title: Text(
                             title[selectedIndex],
-                            style: TextStyle(color: Colors.white,fontFamily: 'Amiko'),
+                            style: TextStyle(
+                                color: Colors.white, fontFamily: 'Amiko'),
                           ),
                           actions: state.user.role == 0
-                              ? actions(additionBloc, commentBloc)
+                              ? Localization.of(context)
+                                          .orderStatus[widget.data.status] !=
+                                      Localization.of(context).orderStatus[
+                                          1] // status not equal to confirmed
+                                  ? actions(additionBloc, commentBloc)
+                                  : null
                               : null,
                         ),
                         body: PageView(
@@ -866,49 +1001,49 @@ class _OrderPageState extends State<OrderPage> {
                           }),
                           items: tabs(),
                         )
-                      // SafeArea(
-                      //   child: Container(
-                      //     margin: EdgeInsets.symmetric(horizontal: 10),
-                      //     decoration: BoxDecoration(
-                      //         color: Colors.white,
-                      //         borderRadius:
-                      //             BorderRadius.all(Radius.circular(100)),
-                      //         boxShadow: [
-                      //           BoxShadow(
-                      //               spreadRadius: -10,
-                      //               blurRadius: 60,
-                      //               color: Colors.black.withOpacity(.20),
-                      //               offset: Offset(0, 15))
-                      //         ]),
-                      //     child: Padding(
-                      //       padding: const EdgeInsets.symmetric(
-                      //           horizontal: 5.0, vertical: 5),
-                      //       child: GNav(
-                      //           tabs: tabs().map((e) {
-                      //             return GButton(
-                      //               gap: 10,
-                      //               iconActiveColor: e.color,
-                      //               iconColor: Colors.grey,
-                      //               textColor: e.color,
-                      //               backgroundColor: e.color.withOpacity(.2),
-                      //               iconSize: 24,
-                      //               padding: EdgeInsets.symmetric(
-                      //                   horizontal: 18, vertical: 5),
-                      //               icon: e.icon,
-                      //               text: e.text,
-                      //             );
-                      //           }).toList(),
-                      //           selectedIndex: selectedIndex,
-                      //           onTabChange: (index) {
-                      //             setState(() {
-                      //               selectedIndex = index;
-                      //             });
-                      //             controller.jumpToPage(index);
-                      //           }),
-                      //     ),
-                      //   ),
-                      // ),
-                    );
+                        // SafeArea(
+                        //   child: Container(
+                        //     margin: EdgeInsets.symmetric(horizontal: 10),
+                        //     decoration: BoxDecoration(
+                        //         color: Colors.white,
+                        //         borderRadius:
+                        //             BorderRadius.all(Radius.circular(100)),
+                        //         boxShadow: [
+                        //           BoxShadow(
+                        //               spreadRadius: -10,
+                        //               blurRadius: 60,
+                        //               color: Colors.black.withOpacity(.20),
+                        //               offset: Offset(0, 15))
+                        //         ]),
+                        //     child: Padding(
+                        //       padding: const EdgeInsets.symmetric(
+                        //           horizontal: 5.0, vertical: 5),
+                        //       child: GNav(
+                        //           tabs: tabs().map((e) {
+                        //             return GButton(
+                        //               gap: 10,
+                        //               iconActiveColor: e.color,
+                        //               iconColor: Colors.grey,
+                        //               textColor: e.color,
+                        //               backgroundColor: e.color.withOpacity(.2),
+                        //               iconSize: 24,
+                        //               padding: EdgeInsets.symmetric(
+                        //                   horizontal: 18, vertical: 5),
+                        //               icon: e.icon,
+                        //               text: e.text,
+                        //             );
+                        //           }).toList(),
+                        //           selectedIndex: selectedIndex,
+                        //           onTabChange: (index) {
+                        //             setState(() {
+                        //               selectedIndex = index;
+                        //             });
+                        //             controller.jumpToPage(index);
+                        //           }),
+                        //     ),
+                        //   ),
+                        // ),
+                        );
                   },
                 );
               },
@@ -935,7 +1070,7 @@ class _AdditionPostPageState extends State<AdditionPostPage> {
         child: Builder(
           builder: (context) {
             AdditionFormBloc formBloc =
-            BlocProvider.of<AdditionFormBloc>(context);
+                BlocProvider.of<AdditionFormBloc>(context);
             return FormBlocListener<AdditionFormBloc, String, String>(
               onSubmitting: (context, state) {
                 LoadingDialog.show(context);
@@ -969,33 +1104,37 @@ class _AdditionPostPageState extends State<AdditionPostPage> {
                                     alignment: Alignment.center,
                                     child: state.value == null
                                         ? Column(
-                                        mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                        crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Icon(
-                                            Icons.file_upload,
-                                            color: Colors.grey,
-                                            size: 64,
-                                          ),
-                                          Expanded(
-                                            child: Text(
-                                                'Images for select a picture or take'),
-                                          ),
-                                        ])
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                                Icon(
+                                                  Icons.file_upload,
+                                                  color: Colors.grey,
+                                                  size: 64,
+                                                ),
+                                                Expanded(
+                                                  child: Text(
+                                                      'Images for select a picture or take',
+                                                      style: TextStyle(
+                                                          color: primaryColor,
+                                                          fontSize: 11,
+                                                          fontFamily: 'Amiko')),
+                                                ),
+                                              ])
                                         : Stack(
-                                      children: [
-                                        Container(
-                                          alignment: Alignment.center,
-                                          child: Image.file(
-                                            state.value,
-                                            fit: BoxFit.fill,
-                                          ),
-                                        ),
-                                      ],
-                                    ))));
+                                            children: [
+                                              Container(
+                                                alignment: Alignment.center,
+                                                child: Image.file(
+                                                  state.value,
+                                                  fit: BoxFit.fill,
+                                                ),
+                                              ),
+                                            ],
+                                          ))));
                       },
                     ),
                     SizedBox(height: 10),
@@ -1003,13 +1142,25 @@ class _AdditionPostPageState extends State<AdditionPostPage> {
                       textFieldBloc: formBloc.tag,
                       maxLines: 3,
                       maxLength: 128,
+                      style: TextStyle(
+                          color: primaryColor,
+                          fontSize: 11,
+                          fontFamily: 'Amiko'),
                       decoration: InputDecoration(
                           labelText: 'Description',
-                          border: OutlineInputBorder()),
+                          border: OutlineInputBorder(),
+                          labelStyle: TextStyle(
+                              color: primaryColor,
+                              fontSize: 11,
+                              fontFamily: 'Amiko')),
                     ),
                     SizedBox(height: 10),
                     RaisedButton(
-                      child: Text(Localization.of(context).submit),
+                      child: Text(Localization.of(context).submit,
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 11,
+                              fontFamily: 'Amiko')),
                       onPressed: () {
                         formBloc.submit();
                       },
@@ -1039,7 +1190,9 @@ class ViewOrderImage extends StatelessWidget {
                 iconTheme: IconThemeData(color: Colors.white),
                 brightness: Brightness.dark)),
         child: Scaffold(
-            appBar: AppBar(   backgroundColor: Color(0xFF213c56),),
+            appBar: AppBar(
+              backgroundColor: Color(0xFF213c56),
+            ),
             body: BlocBuilder<AppBloc, AppState>(builder: (context, state) {
               return Stack(
                 children: <Widget>[
@@ -1047,21 +1200,21 @@ class ViewOrderImage extends StatelessWidget {
                       child: PhotoView(
                           heroAttributes: PhotoViewHeroAttributes(tag: url),
                           loadingBuilder: (context, progress) => Center(
-                            child: Container(
-                              width: 20.0,
-                              height: 20.0,
-                              child: CircularProgressIndicator(
-                                value: progress == null
-                                    ? null
-                                    : progress.expectedTotalBytes == null ||
-                                    progress.cumulativeBytesLoaded ==
-                                        null
-                                    ? null
-                                    : progress.cumulativeBytesLoaded /
-                                    progress.expectedTotalBytes,
+                                child: Container(
+                                  width: 20.0,
+                                  height: 20.0,
+                                  child: CircularProgressIndicator(
+                                    value: progress == null
+                                        ? null
+                                        : progress.expectedTotalBytes == null ||
+                                                progress.cumulativeBytesLoaded ==
+                                                    null
+                                            ? null
+                                            : progress.cumulativeBytesLoaded /
+                                                progress.expectedTotalBytes,
+                                  ),
+                                ),
                               ),
-                            ),
-                          ),
                           imageProvider: NetworkImage(url))),
                 ],
               );

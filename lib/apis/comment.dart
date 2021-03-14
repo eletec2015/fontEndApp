@@ -13,7 +13,6 @@ class Comment extends Equatable {
   String create_at;
   User user;
   List<Comment> child;
-
   String content_type;
   int object_id;
   int user_id;

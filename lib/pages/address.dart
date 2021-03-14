@@ -51,8 +51,8 @@ class _AddressListPageState extends State<AddressListPage> {
               appBar: AppBar(
                 backgroundColor: Color(0xFF213c56),
                 title: pick
-                    ? Text(Localization.of(context).chooseAddress,style: TextStyle(color: Colors.white),)
-                    : Text(Localization.of(context).address,style: TextStyle(color: Colors.white)),
+                    ? Text(Localization.of(context).chooseAddress,style: TextStyle(color: Colors.white,fontFamily: 'Amiko'),)
+                    : Text(Localization.of(context).address,style: TextStyle(color: Colors.white,fontFamily: 'Amiko')),
                 leading: pick
                     ? Container()
                     : BackButton(onPressed: () {
@@ -298,7 +298,10 @@ class _AddressPostPageState extends State<AddressPostPage> {
                       DropdownFieldBlocBuilder(
                         showEmptyItem: false,
                         decoration: InputDecoration(
-                            labelText: 'Model', border: OutlineInputBorder()),
+                            labelText: 'Model', border: OutlineInputBorder(),labelStyle:TextStyle(
+                            color: Colors.white,
+                            fontSize: 11,
+                            fontFamily: 'Amiko')),
                         itemBuilder: (context, value) =>
                             ['Personal', 'Company'][value],
                         selectFieldBloc: mapBloc.model,
@@ -306,7 +309,10 @@ class _AddressPostPageState extends State<AddressPostPage> {
                       DropdownFieldBlocBuilder(
                         showEmptyItem: false,
                         decoration: InputDecoration(
-                            labelText: 'Style', border: OutlineInputBorder()),
+                            labelText: 'Style', border: OutlineInputBorder(),labelStyle:TextStyle(
+                            color: Colors.white,
+                            fontSize: 11,
+                            fontFamily: 'Amiko')),
                         itemBuilder: (context, value) =>
                             ['Apartment', 'Villa'][value],
                         selectFieldBloc: mapBloc.style,
@@ -316,7 +322,10 @@ class _AddressPostPageState extends State<AddressPostPage> {
                         isEnabled: false,
                         decoration: InputDecoration(
                             labelText: 'Latitude',
-                            border: OutlineInputBorder()),
+                            border: OutlineInputBorder(),labelStyle:TextStyle(
+                        color: Colors.white,
+                            fontSize: 11,
+                            fontFamily: 'Amiko')),
                       ),
                       TextFieldBlocBuilder(
                         textFieldBloc: mapBloc.lng,
@@ -324,19 +333,26 @@ class _AddressPostPageState extends State<AddressPostPage> {
                         focusNode: FocusNode(),
                         decoration: InputDecoration(
                             labelText: 'Longitude',
-                            border: OutlineInputBorder()),
+                            border: OutlineInputBorder(),labelStyle:TextStyle(
+              color: Colors.white,
+              fontSize: 11,
+              fontFamily: 'Amiko')),
                       ),
                       TextFieldBlocBuilder(
                         textFieldBloc: mapBloc.address,
                         isEnabled: false,
                         maxLines: 3,
                         decoration: InputDecoration(
-                            labelText: 'Address', border: OutlineInputBorder()),
+                            labelText: 'Address', border: OutlineInputBorder(),labelStyle:TextStyle(
+              color: Colors.white,
+              fontSize: 11,
+              fontFamily: 'Amiko')),
                       ),
                       FlatButton(
                         child: Text('Select again on the map'),
                         onPressed: () {
                           showLocationPicker(context, Constant.ApiKey,
+
                                   initialCenter: LatLng(
                                       mapBloc.lat.valueToDouble,
                                       mapBloc.lng.valueToDouble),
@@ -401,14 +417,17 @@ class _AddressPostPageState extends State<AddressPostPage> {
                         DropdownFieldBlocBuilder(
                           showEmptyItem: false,
                           decoration: InputDecoration(
+                            labelStyle:TextStyle(fontFamily: 'Amiko'),
                               labelText: Localization.of(context).model, border: OutlineInputBorder()),
                           itemBuilder: (context, value) =>
                               [Localization.of(context).modeltype[0],Localization.of(context).modeltype[1]][value],
+
                           selectFieldBloc: formBloc.model,
                         ),
                         DropdownFieldBlocBuilder(
                           showEmptyItem: false,
                           decoration: InputDecoration(
+                              labelStyle:TextStyle(fontFamily: 'Amiko'),
                               labelText: Localization.of(context).style, border: OutlineInputBorder()),
                           itemBuilder: (context, value) =>
                               [Localization.of(context).styletype[0], Localization.of(context).styletype[1]][value],
@@ -461,6 +480,7 @@ class _AddressPostPageState extends State<AddressPostPage> {
                                             initialCenter: LatLng(
                                                 25.108220955794977,
                                                 55.21488390862942),
+
                                             myLocationButtonEnabled: true,
                                             layersButtonEnabled: true,
                                             automaticallyAnimateToCurrentLocation:
@@ -504,7 +524,7 @@ class _AddressPostPageState extends State<AddressPostPage> {
                         );
                       }),
                   FlatButton(
-                    child: Text(Localization.of(context).submit),
+                    child: Text(Localization.of(context).submit,style: TextStyle(color:Colors.white,fontFamily: 'Amiko')),
                     onPressed: () {
                       if (state is AddressMapState) {
                         mapBloc.submit();

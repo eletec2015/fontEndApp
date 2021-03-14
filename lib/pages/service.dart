@@ -31,8 +31,8 @@ class _ServicePageState extends State<ServicePage> {
                     ['assets/images/electricaling.png', Localization.of(context).serviceType[0], '0'],
                     ['assets/images/ducting.png',Localization.of(context).serviceType[3], '3'],
                     ['assets/images/plumbingg.png',Localization.of(context).serviceType[2], '2'],
-                    ['assets/images/general_maintenanceing.png', Localization.of(context).serviceType[5], '3'],
-                    ['assets/images/interior_fitoutsing.png',Localization.of(context).serviceType[4], '2'],
+                    ['assets/images/general_maintenanceing.png', Localization.of(context).serviceType[5], '5'],
+                    ['assets/images/interior_fitoutsing.png',Localization.of(context).serviceType[4], '4'],
                   ].map((item) {
                     return GestureDetector(
                       child: _GridPhotoItem(
@@ -121,18 +121,21 @@ class _GridPhotoItem extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top:20.0,bottom: 20.0),
       child: GridTile(
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(15)),
-            color: Color(0xffBEBEBE),
-          ),
-          child: Column(
-            children: [
-              SizedBox(height: 10,),
-              image,
-              SizedBox(height: 8,),
-              Text(photo.title,style: TextStyle(fontSize: 12,color: Colors.grey[700]),)
-            ],
+        child: Card(
+          elevation: 20,
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(15)),
+              color: Color(0xffffffff),
+            ),
+            child: Column(
+              children: [
+                SizedBox(height: 10,),
+                image,
+                SizedBox(height: 8,),
+                Text(photo.title,style: TextStyle(fontSize: 12,color: Colors.grey[700]),)
+              ],
+            ),
           ),
         ),
       ),

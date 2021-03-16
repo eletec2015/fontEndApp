@@ -97,7 +97,8 @@ return BlocBuilder<AppBloc, AppState>(
                             .of(context)
                             .bookinghistory, style: TextStyle(color: Theme
                             .of(context)
-                            .primaryColor, fontFamily: "Amiko"),),
+                            .primaryColor, fontFamily: "Amiko",),
+                        ),
                       ),
 //                  Divider(color: Theme.of(context).primaryColor),
 //                  ListTile(
@@ -207,38 +208,38 @@ return BlocBuilder<AppBloc, AppState>(
                           .of(context)
                           .primaryColor),
 
-                      ListTile(
-                        title: Text(Localization
-                            .of(context)
-                            .language,style: TextStyle(fontFamily: "Amiko", color: Theme
-                            .of(context)
-                            .primaryColor),),
-                        subtitle: state.locale.languageCode == 'en'
-                            ? Text(Localization
-                            .of(context)
-                            .english,style: TextStyle(fontFamily: "Amiko", color: Theme
-                            .of(context)
-                            .primaryColor),)
-                            : Text(Localization
-                            .of(context)
-                            .arabic),
-                        leading: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child:FaIcon(FontAwesomeIcons.globeAsia,color: Theme
+                      Visibility(
+                        visible: false,
+                        child: ListTile(
+                          title: Text(Localization
                               .of(context)
-                              .primaryColor),
+                              .language,style: TextStyle(fontFamily: "Amiko", color: Theme
+                              .of(context)
+                              .primaryColor),),
+                          subtitle: state.locale.languageCode == 'en'
+                              ? Text(Localization
+                              .of(context)
+                              .english,style: TextStyle(fontFamily: "Amiko", color: Theme
+                              .of(context)
+                              .primaryColor),)
+                              : Text(Localization
+                              .of(context)
+                              .arabic),
+                          leading: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child:FaIcon(FontAwesomeIcons.globeAsia,color: Theme
+                                .of(context)
+                                .primaryColor),
+                          ),
+                          // secondary:
+                          // onChanged: (bool value) {
+                          //   // print(value);
+                          //   // BlocProvider.of<AppBloc>(context).add(SwitchLanguage(
+                          //   //     value ? Locale('ar', 'IQ') : Locale('en', '')));
+                          // },
+                         // value: state.locale.languageCode != 'en',
                         ),
-                        // secondary:
-                        // onChanged: (bool value) {
-                        //   // print(value);
-                        //   // BlocProvider.of<AppBloc>(context).add(SwitchLanguage(
-                        //   //     value ? Locale('ar', 'IQ') : Locale('en', '')));
-                        // },
-                       // value: state.locale.languageCode != 'en',
                       ),
-                      Divider(color: Theme
-                          .of(context)
-                          .primaryColor),
                       ListTile(
                         onTap: () {
                           Navigator.push(context, MaterialPageRoute(
@@ -291,7 +292,7 @@ return BlocBuilder<AppBloc, AppState>(
                    iconTheme: IconThemeData(
                      color: Colors.white
                    ),
-                   title: Text("Booking History",style: TextStyle(color: Colors.white,fontFamily: "amiko"),),
+                   title: Text("Booking History",style: TextStyle(color: Colors.white,fontFamily: "Amiko", fontSize: 16),),
                    backgroundColor: Color(0xFF1d364f),
                    leading: screen==1?IconButton(
                    icon: Icon(Icons.arrow_back,color:Colors.white),
@@ -303,10 +304,7 @@ return BlocBuilder<AppBloc, AppState>(
 
                    ):null
                  ):AppBar(
-                   backgroundColor: Color(0xFF1d364f),
-
-
-
+                   backgroundColor: Color(0x001d364f)
                  ),
                 body: Container(
                   constraints: BoxConstraints.expand(),
@@ -319,9 +317,9 @@ return BlocBuilder<AppBloc, AppState>(
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(
-                            left: 50.0,  top: 60.0,right: 50.0),
+                            left: 30.0,  top: 40.0,right: 30.0, bottom: 10),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -330,34 +328,37 @@ return BlocBuilder<AppBloc, AppState>(
                                     .of(context)
                                     .welcome, style: TextStyle(
                                     color: Colors.white,
-                                    fontSize: 18,
+                                    fontSize: 17,
                                     fontWeight: FontWeight.w500,
+                                    letterSpacing: 0,
                                     fontFamily: 'Amiko'),),
                                 Text(Localization
                                     .of(context)
                                     .choose_service1, style: TextStyle(
                                     color: Colors.white,
-                                    fontSize: 11,
+                                    fontSize: 13,
+                                    letterSpacing: 0,
                                     fontFamily: 'Amiko'),),
                                 Text(Localization
                                     .of(context)
                                     .choose_service2, style: TextStyle(
                                     color: Colors.white,
-                                    fontSize: 11,
+                                    fontSize: 12,
+                                    letterSpacing: 0,
                                     fontFamily: 'Amiko'),),
                               ],
                             ),
-                            // state.locale.languageCode == 'en' ?SizedBox(width: MediaQuery.of(context).size.width*0.06,):
-                            // SizedBox(width: MediaQuery.of(context).size.width*0.23,),
-                            // Visibility(
-                            //   visible: false,
-                            //   child: CircleAvatar(
-                            //     radius: 35,
-                            //     backgroundColor: Colors.white,
-                            //     child: Image.asset(
-                            //       'assets/images/splash.jpg', height: 50,width: 50,),
-                            //   ),
-                            // ),
+                            state.locale.languageCode == 'en' ?SizedBox(width: MediaQuery.of(context).size.width*0.06,):
+                            SizedBox(width: MediaQuery.of(context).size.width*0.23,),
+                            Visibility(
+                              visible: true,
+                              child: CircleAvatar(
+                                radius: 35,
+                                backgroundColor: Colors.white,
+                                child: Image.asset(
+                                  'assets/images/splash.jpg', height: 50,width: 50,),
+                              ),
+                            ),
                           ],
                         ),
                       ),

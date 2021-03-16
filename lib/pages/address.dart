@@ -51,8 +51,8 @@ class _AddressListPageState extends State<AddressListPage> {
               appBar: AppBar(
                 backgroundColor: Color(0xFF213c56),
                 title: pick
-                    ? Text(Localization.of(context).chooseAddress,style: TextStyle(color: Colors.white,fontFamily: 'Amiko'),)
-                    : Text(Localization.of(context).address,style: TextStyle(color: Colors.white,fontFamily: 'Amiko')),
+                    ? Text(Localization.of(context).chooseAddress,style: TextStyle(color: Colors.white,fontFamily: 'Amiko', fontSize: 17),)
+                    : Text(Localization.of(context).address,style: TextStyle(color: Colors.white,fontFamily: 'Amiko', fontSize: 17)),
                 leading: pick
                     ? Container()
                     : BackButton(onPressed: () {
@@ -124,10 +124,7 @@ class _AddressListPageState extends State<AddressListPage> {
                     onRefresh: () => bloc.add(AddressRefreshList()),
                     child: ListView.builder(
                       padding: const EdgeInsets.symmetric(horizontal: 8),
-                      itemBuilder: (c, i) => AddressItem(
-                        data: state.list[i],
-                        pick: pick,
-                      ),
+                      itemBuilder: (c, i) => _buildItem(state.list[i], pick,),
                       itemCount: state.list.length,
                     ),
                   );
@@ -137,103 +134,103 @@ class _AddressListPageState extends State<AddressListPage> {
 
     return BlocProvider(create: (_) => AddressBloc(), child: body);
   }
-}
 
-class AddressItem extends StatelessWidget {
-  final Address data;
-  final bool pick;
+  _buildItem(Address data, bool pick) {
+    final MaterialColor bgColor = Colors.blue;
 
-  const AddressItem({Key key, this.data, this.pick}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Theme(
-        data: Theme.of(context).copyWith(
-            secondaryHeaderColor: Colors.blue, // card header background
-            cardColor: Colors.white, // card field background
-            buttonColor: Colors.blue, // button background color
-            textTheme: Theme.of(context).textTheme.copyWith(
-                  button: Theme.of(context)
-                      .textTheme
-                      .button
-                      .copyWith(color: Colors.white,fontFamily: 'Amiko'), // button text
-                  subtitle1: Theme.of(context)
-                      .textTheme
-                      .subtitle1
-                      .copyWith(color: Colors.black87,fontFamily: 'Amiko'), // input text
-                  headline6: Theme.of(context)
-                      .textTheme
-                      .headline6
-                      .copyWith(color: Colors.white,fontFamily: 'Amiko'), // card header text
-                ),
-            inputDecorationTheme: InputDecorationTheme(
-              labelStyle: TextStyle(color: Colors.black87), // style for labels
+    return Padding(
+      padding: const EdgeInsets.only(left: 5.0, right: 5.0, top: 5.0),
+      child: Card(
+        elevation: 5,
+        shape:
+        RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+        child: ClipPath(
+          child: Container(
+            height: 140,
+            decoration: BoxDecoration(
+              border: Border(
+                  left: BorderSide(color: const Color(0xFF1d364f), width: 3)),
             ),
-            cardTheme: CardTheme(
-                shape: RoundedRectangleBorder(
-              side: BorderSide(width: 1, color: Colors.grey),
-              borderRadius: BorderRadius.circular(8),
-            ))),
-        child: Builder(builder: (context) {
-          return CardSettings.sectioned(
-            showMaterialonIOS: true,
-            fieldPadding:
-                const EdgeInsets.symmetric(vertical: 10, horizontal: 14),
-            margin: const EdgeInsets.all(0),
-            children: [
-              CardSettingsSection(
-                children: [
-                  CardSettingsField(
-                    fieldPadding: null,
-                    labelAlign: null,
-                    label: '',
-                    requiredIndicator: data.style == 0
-                        ? Image.asset(
-                            'assets/images/apartment.png',
-                            width: 48,
-                            height: 48,
-                          )
-                        : Image.asset(
-                            'assets/images/villa.png',
-                            width: 48,
-                            height: 48,
-                          ),
-                    content: Text(data.toTitle,style: TextStyle(fontFamily:'Amiko'),),
+            child: Row(
+              children: [
+                Flexible(
+                  flex: 2,
+                  child: Container(
+                    color: const Color(0xFF9DA2C8),
+                    width: double.infinity,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Flexible(
+                          child: data.style == 0 ?
+                            Icon(Icons.location_on, color: const Color(0xFF1d364f), size: 60,)
+                              : Icon(Icons.location_on_outlined, color: const Color(0xFF1d364f), size: 60,)
+                        ),
+                      ],
+                    ),
                   ),
-                  pick
-                      ? CardSettingsButton(
-                          label: 'Select',
-                          isDestructive: true,
-                          backgroundColor: Theme.of(context).cardColor,
-                          textColor: Theme.of(context).buttonColor,
-                          onPressed: () {
-                            context.navigator.pop(data);
-                          },
-                        )
-                      : CardSettingsButton(
-                          label: Localization.of(context).viewdetail,
-                          isDestructive: true,
-                          backgroundColor: Theme.of(context).cardColor,
-                          textColor: Theme.of(context).buttonColor,
-                          onPressed: () {
-                            context.navigator
-                                .push('/put',
-                                    arguments:
-                                        AddressPostPageArguments(data: data))
-                                .then((value) {
-                              if (value != null && value) {
-                                AddressBloc bloc =
-                                    BlocProvider.of<AddressBloc>(context);
-                                bloc.refreshController.requestRefresh();
-                              }
-                            });
-                          },
-                        )
-                ],
-              )
-            ],
-          );
-        }));
+                ),
+                Flexible(
+                  flex: 5,
+                  child: Container(
+                    child: Row(
+                      children: [
+                        Flexible(
+                          flex: 4,
+                          fit: FlexFit.tight,
+                          child: Container(
+                            margin: EdgeInsets.symmetric(horizontal: 10),
+                            child: Column(
+                              mainAxisAlignment:
+                              MainAxisAlignment.spaceEvenly,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  data.toTitle,
+                                  style: TextStyle(
+                                      color: const Color(0xFF1d364f),
+                                      fontFamily: 'Amiko', fontWeight: FontWeight.w700),
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    pick ?
+                                    RaisedButton(onPressed: () {
+                                      context.navigator.pop(data);
+                                    }, child: Text('Select'),)
+                                        :
+                                    RaisedButton(onPressed: () {
+                                      context.navigator
+                                          .push('/put',
+                                          arguments:
+                                          AddressPostPageArguments(data: data))
+                                          .then((value) {
+                                        if (value != null && value) {
+                                          AddressBloc bloc =
+                                          BlocProvider.of<AddressBloc>(context);
+                                          bloc.refreshController.requestRefresh();
+                                        }
+                                      });
+                                    }, child: Text('View Details'),)
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+          clipper: ShapeBorderClipper(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(14))),
+        ),
+      ),
+    );
   }
 }
 

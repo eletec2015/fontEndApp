@@ -16,7 +16,7 @@ class _ServicePageState extends State<ServicePage> {
   @override
   Widget build(BuildContext context) => SingleChildScrollView(
         child: Padding(
-            padding: const EdgeInsets.all(0),
+            padding: const EdgeInsets.all(20),
             child: Column(
               children: <Widget>[
                 GridView.count(
@@ -24,8 +24,7 @@ class _ServicePageState extends State<ServicePage> {
                   primary: false,
                   crossAxisCount: 2,
                   mainAxisSpacing: 0,
-                  crossAxisSpacing: 20,
-                  padding: EdgeInsets.all(MediaQuery.of(context).size.height * 0.05),
+                  crossAxisSpacing: 10,
                   children: [
                     ['assets/images/airConditioned.png', Localization.of(context).serviceType[1], '1'],
                     ['assets/images/electricaling.png', Localization.of(context).serviceType[0], '0'],
@@ -113,13 +112,13 @@ class _GridPhotoItem extends StatelessWidget {
 
     final Widget image = Image.asset(
       photo.assetName,
-      height: 40,
+      height: 65,
       // color: bgColor,
       // colorBlendMode: BlendMode.overlay,
     );
 
     return Padding(
-      padding: const EdgeInsets.only(top:20.0,bottom: 20.0),
+      padding: const EdgeInsets.only(top: 25.0,bottom: 25.0),
       child: GridTile(
         child: Card(
           elevation: 20,
@@ -129,11 +128,11 @@ class _GridPhotoItem extends StatelessWidget {
               color: Color(0xffffffff),
             ),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(height: 10,),
                 image,
-                SizedBox(height: 8,),
-                Text(photo.title,style: TextStyle(fontSize: 12,color: Colors.grey[700]),)
+                SizedBox(height: 5,),
+                Text(photo.title,style: TextStyle(fontSize: 14,color: Colors.grey[800]),)
               ],
             ),
           ),

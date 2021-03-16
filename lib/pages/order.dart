@@ -27,6 +27,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:bookservice/views/date_time/date_time_field_bloc_builder.dart'
     as _IL;
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:intl/intl.dart';
 
 // ignore_for_file: close_sinks
 // ignore_for_file: implementation_imports
@@ -74,6 +75,9 @@ class _OrderListPageState extends State<OrderListPage> {
 
   @override
   Widget build(BuildContext context) {
+    if(_pagingController.hasListeners == true) {
+      _pagingController.refresh();
+    }
     return BlocBuilder<OrderListBloc, OrderListState>(
       builder: (context, state) {
         OrderListBloc bloc = BlocProvider.of<OrderListBloc>(context);
@@ -85,7 +89,7 @@ class _OrderListPageState extends State<OrderListPage> {
               padding: const EdgeInsets.symmetric(horizontal: 8),
               child: Column(
                 children: [
-                  OrderListItem(order: item),
+                  _buildItem(item),
                   SizedBox(
                     height: 10,
                   ),
@@ -97,15 +101,8 @@ class _OrderListPageState extends State<OrderListPage> {
       },
     );
   }
-}
 
-class OrderListItem extends StatelessWidget {
-  final Order order;
-
-  const OrderListItem({Key key, this.order}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
+  _buildItem(order) {
     final MaterialColor bgColor = Colors.blue;
 
     final List<String> images = [
@@ -118,94 +115,217 @@ class OrderListItem extends StatelessWidget {
     ];
 
     return GestureDetector(
-        onTap: () {
-          ExtendedNavigator.of(context).push('/order/${order.id}',
-              arguments: OrderPageArguments(data: order));
-        },
-        child: DefaultTextStyle(
-            style: TextStyle(
-                color: Colors.white,
-                fontFamily: GoogleFonts.getFont('Righteous').fontFamily),
+      onTap: () {
+        ExtendedNavigator.of(context).push('/order/${order.id}',
+            arguments: OrderPageArguments(data: order));
+      },
+      child: Padding(
+        padding: const EdgeInsets.only(left: 5.0, right: 5.0, top: 5.0),
+        child: Card(
+          elevation: 5,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+          child: ClipPath(
             child: Container(
-              margin: EdgeInsets.only(top: 5),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                    border: Border.all(color: Color(0xFF213c56), width: 1),
-                    shape: BoxShape.rectangle,
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(color: Colors.grey[300], offset: Offset(0, 0)),
-                      BoxShadow(
-                          color: Colors.grey[400], offset: Offset(1.5, 3)),
-                    ]),
-                child: Column(
-                  children: <Widget>[
-                    Container(
-                        height: 45,
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
-                        decoration: BoxDecoration(
-                          borderRadius:
-                              BorderRadius.vertical(top: Radius.circular(8)),
-                          shape: BoxShape.rectangle,
-                          color: Color(0xFF213c56),
-                        ),
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Text('${order.orderID}'),
-                              Text(
-                                  '${Localization.of(context).orderStatus[order.status]}')
-                            ])),
-                    Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 10),
-                        child: ListTile(
-                          trailing: Image.asset(images[order.service]),
-                          title: Text(
-                              '${Localization.of(context).mainInfo[order.service][order.main_info]}'),
-                          subtitle: Text(
-                              '${Localization.of(context).subInfo[order.service][order.main_info][order.sub_info]} \n${order.create_at}'),
-                        )),
-                    Container(
-                      margin: EdgeInsets.only(right: 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
+              height: 120,
+              decoration: BoxDecoration(
+                border: Border(
+                    left: BorderSide(color: const Color(0xFF1d364f), width: 3)),
+              ),
+              child: Row(
+                children: [
+                  Flexible(
+                    flex: 2,
+                    child: Container(
+                      color: const Color(0xFF9DA2C8),
+                      width: double.infinity,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          RaisedButton(
-                            onPressed: Localization.of(context)
-                                        .orderStatus[order.status] !=
-                                    Localization.of(context).orderStatus[1]
-                                ? () async {
-                                    // delete api call
-                                    try {
-                                      await Dio().post(
-                                        Constant.Host +
-                                            'orders/${order.orderID}/set_delete/',
-                                        data: {'deleted': true},
-                                        options: Options(
-                                          headers: {
-                                            "Authorization":
-                                                'token ${await CacheService.instance.getToken()}', // set content-length
-                                          },
+                          Flexible(
+                            flex: 2,
+                            child: Image(
+                              image: AssetImage(images[order.service]),
+                            ),
+                          ),
+                          Flexible(
+                            flex: 1,
+                            child: Text(DateFormat('dd-MM-yyyy').format(
+                                DateTime.parse(order.from_date)),
+                                style: TextStyle(
+                                    color: Colors.white, fontFamily: 'Amiko', fontWeight: FontWeight.w600)),
+                          ),
+                          Flexible(
+                            flex: 1,
+                            child: Text(
+                              DateFormat('hh:mm a').format(
+                                  DateTime.parse(order.from_date)),
+                              style: TextStyle(
+                                  color: Colors.white, fontFamily: 'Amiko', fontWeight: FontWeight.w600),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  Flexible(
+                    flex: 5,
+                    child: Container(
+                      child: Row(
+                        children: [
+                          Flexible(
+                            flex: 4,
+                            fit: FlexFit.tight,
+                            child: Container(
+                              margin: EdgeInsets.symmetric(horizontal: 10),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    Localization.of(context)
+                                        .serviceType[order.service],
+                                    style: TextStyle(
+                                        color: const Color(0xFF1d364f),
+                                        fontFamily: 'Amiko', fontWeight: FontWeight.w700),
+                                  ),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        Localization.of(context)
+                                                .mainInfo[order.service]
+                                            [order.main_info],
+                                        style: TextStyle(
+                                            color: const Color(0xFF1d364f),
+                                            fontFamily: 'Amiko'),
+                                      ),
+                                      Text(
+                                        Localization.of(context)
+                                                .subInfo[order.service]
+                                            [order.main_info][order.sub_info],
+                                        style: TextStyle(
+                                            color: const Color(0xFF1d364f),
+                                            fontFamily: 'Amiko'),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Flexible(
+                            flex: 3,
+                            fit: FlexFit.tight,
+                            child: Container(
+                                margin: EdgeInsets.symmetric(vertical: 10),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Column(
+                                      children: [
+                                        Text(
+                                          DateFormat('dd-MM-yyyy').format(
+                                              DateTime.parse(order.to_date)),
+                                          style: TextStyle(
+                                              color: const Color(0xFF1d364f),
+                                              fontFamily: 'Amiko'),
                                         ),
-                                      );
-
-                                      OrderListBloc bloc =
-                                          BlocProvider.of<OrderListBloc>(
-                                              context);
-                                      bloc.refreshController.requestRefresh();
-                                    } catch (e) {
-                                      print('error while deleting order $e');
-                                    }
-                                  }
-                                : null,
-                            child: Text('Delete'),
+                                        Text(
+                                          Localization.of(context)
+                                              .orderStatus[order.status],
+                                          style: TextStyle(
+                                              color: const Color(0xFF1d364f),
+                                              fontFamily: 'Amiko'),
+                                        ),
+                                      ],
+                                    ),
+                                    RaisedButton(
+                                      elevation: 5,
+                                      onPressed: Localization.of(context)
+                                                  .orderStatus[order.status] !=
+                                              Localization.of(context)
+                                                  .orderStatus[1]
+                                          ? () async {
+                                              // delete api call
+                                              try {
+                                                _showMyDialog(order.id);
+                                              } catch (e) {
+                                                print(
+                                                    'error while deleting order $e');
+                                              }
+                                            }
+                                          : null,
+                                      child: Text(
+                                        'Delete',
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontFamily: 'Amiko'),
+                                      ),
+                                    )
+                                  ],
+                                )),
                           ),
                         ],
                       ),
-                    )
-                  ],
-                ))));
+                    ),
+                  )
+                ],
+              ),
+            ),
+            clipper: ShapeBorderClipper(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(14))),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Future<void> _showMyDialog(int id) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Alert..!'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('Are you sure to proceed?'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+                onPressed: () async {
+                  Dio dio = new Dio();
+                  dio.options.headers.addAll({
+                    "authorization": "${await CacheService.instance.getToken()}"
+                  });
+                  await dio.post(Constant.Host + 'orders/$id/ord_delete/',
+                      data: {'deleted': true});
+                  Navigator.of(context).pop();
+                  _pagingController.refresh();
+                },
+                child: Text('Yes',
+                    style: TextStyle(color: const Color(0xFF1d364f)))),
+            TextButton(
+              child: Text(
+                'No',
+                style: TextStyle(color: const Color(0xFF1d364f)),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }
 
@@ -267,9 +387,9 @@ class _OrderPostPageState extends State<OrderPostPage> {
                   DropdownFieldBlocBuilder(
                     showEmptyItem: false,
                     isEnabled: Localization.of(context)
-                                .orderStatus[widget.data.status] !=
-                            Localization.of(context).orderStatus[
-                                1], // status not equal to confirmed,
+                            .orderStatus[widget.data.status] !=
+                        Localization.of(context)
+                            .orderStatus[1], // status not equal to confirmed,
                     decoration: InputDecoration(
                         labelText: Localization.of(context).service,
                         border: OutlineInputBorder()),
@@ -280,9 +400,9 @@ class _OrderPostPageState extends State<OrderPostPage> {
                   DropdownFieldBlocBuilder(
                     showEmptyItem: false,
                     isEnabled: Localization.of(context)
-                                .orderStatus[widget.data.status] !=
-                            Localization.of(context).orderStatus[
-                                1], // status not equal to confirmed,
+                            .orderStatus[widget.data.status] !=
+                        Localization.of(context)
+                            .orderStatus[1], // status not equal to confirmed,
                     decoration: InputDecoration(
                         labelText: Localization.of(context).maininfo,
                         border: OutlineInputBorder()),
@@ -293,9 +413,9 @@ class _OrderPostPageState extends State<OrderPostPage> {
                   DropdownFieldBlocBuilder(
                     showEmptyItem: false,
                     isEnabled: Localization.of(context)
-                                .orderStatus[widget.data.status] !=
-                            Localization.of(context).orderStatus[
-                                1], // status not equal to confirmed,
+                            .orderStatus[widget.data.status] !=
+                        Localization.of(context)
+                            .orderStatus[1], // status not equal to confirmed,
                     decoration: InputDecoration(
                         labelText: Localization.of(context).subinfo,
                         border: OutlineInputBorder()),
@@ -307,9 +427,9 @@ class _OrderPostPageState extends State<OrderPostPage> {
                       inputFieldBloc: formBloc.address,
                       onPick: showAddressPickModal,
                       isEnabled: Localization.of(context)
-                                  .orderStatus[widget.data.status] !=
-                              Localization.of(context).orderStatus[
-                                  1], // status not equal to confirmed,
+                              .orderStatus[widget.data.status] !=
+                          Localization.of(context)
+                              .orderStatus[1], // status not equal to confirmed,
                       showClearIcon: post,
                       decoration: InputDecoration(
                           labelText: Localization.of(context).address,
@@ -330,9 +450,9 @@ class _OrderPostPageState extends State<OrderPostPage> {
                     dateTimeFieldBloc: formBloc.from_date,
                     canSelectTime: true,
                     isEnabled: Localization.of(context)
-                                .orderStatus[widget.data.status] !=
-                            Localization.of(context).orderStatus[
-                                1], // status not equal to confirmed,
+                            .orderStatus[widget.data.status] !=
+                        Localization.of(context)
+                            .orderStatus[1], // status not equal to confirmed,
                     showClearIcon: false,
                     format: DateFormat('yyyy-MM-dd HH:mm'),
                     initialDate: DateTime(
@@ -350,9 +470,9 @@ class _OrderPostPageState extends State<OrderPostPage> {
                     dateTimeFieldBloc: formBloc.to_date,
                     canSelectTime: true,
                     isEnabled: Localization.of(context)
-                                .orderStatus[widget.data.status] !=
-                            Localization.of(context).orderStatus[
-                                1], // status not equal to confirmed,
+                            .orderStatus[widget.data.status] !=
+                        Localization.of(context)
+                            .orderStatus[1], // status not equal to confirmed,
                     showClearIcon: false,
                     format: DateFormat('yyyy-MM-dd HH:mm'),
                     initialDate: DateTime(
@@ -403,22 +523,22 @@ class _OrderPostPageState extends State<OrderPostPage> {
                         };
                         print(putData);
                         try {
-                          await Dio().put(
+                          await Dio().post(
                             Constant.Host +
-                                'orders/${widget.data.id}/ord_update',
+                                'orders/${widget.data.id}/ord_update/',
                             data: putData,
                             options: Options(
                               headers: {
-                                "Authorization":
-                                    'token ${await CacheService.instance.getToken()}', // set content-length
+                                "authorization":
+                                    '${await CacheService.instance.getToken()}', // set content-length
                               },
                             ),
                           );
                           LoadingDialog.hide(context);
-                          context.navigator.pop();
+                          Navigator.pop(context);
                         } catch (e) {
                           LoadingDialog.hide(context);
-                          print('error while updating order $e');
+                          print('error while updating order ${e.message}');
                         }
                       },
                     ),

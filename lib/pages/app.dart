@@ -68,9 +68,9 @@ class _EletecAppState extends State<EletecApp> {
               // ),
               // fontFamily: GoogleFonts.getFont('Paprika').fontFamily,
               fontFamily: 'Amiko',
-              highlightColor: Colors.blueAccent,
+              highlightColor: Color(0x50213C55),
               hoverColor: Colors.blueAccent.withOpacity(0.04),
-              splashColor: Colors.blueAccent),
+              splashColor: Color(0xff213C55)),
         );
       }));
 }

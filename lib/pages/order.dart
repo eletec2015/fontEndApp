@@ -650,7 +650,7 @@ class _OrderAdditionPageState extends State<OrderAdditionPage> {
           child: ListView.separated(
             padding: const EdgeInsets.symmetric(horizontal: 8),
             separatorBuilder: (context, index) {
-              return SizedBox(height: 25);
+              return SizedBox(height: 20);
             },
             itemBuilder: (c, i) => GestureDetector(
                 onTap: () {
@@ -658,18 +658,20 @@ class _OrderAdditionPageState extends State<OrderAdditionPage> {
                       arguments: ViewOrderImageArguments(
                           url: state.list[i].image['full_size']));
                 },
-                child: AspectRatio(
-                    aspectRatio: 16.0 / 9.0,
-                    child: Container(
+                child: Column(
+                  children: [
+                    SizedBox(height: 15),
+                    Container(
                       height: 300,
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(8)),
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
                           shape: BoxShape.rectangle,
                           image: DecorationImage(
+                            fit: BoxFit.cover,
                               image: NetworkImage(
                                   state.list[i].image['full_size']))),
                       child: Container(
-                          alignment: Alignment.bottomCenter,
+                          alignment: Alignment.topCenter,
                           padding: const EdgeInsets.symmetric(
                               horizontal: 8, vertical: 8),
                           child: Text(
@@ -679,7 +681,9 @@ class _OrderAdditionPageState extends State<OrderAdditionPage> {
                                 .headline6
                                 .copyWith(color: Colors.white),
                           )),
-                    ))),
+                    ),
+                  ],
+                )),
             itemCount: state.list.length,
           ),
         );

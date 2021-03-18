@@ -108,9 +108,9 @@ class _OrderListPageState extends State<OrderListPage> {
     final List<String> images = [
       'assets/images/airConditioned.png',
       'assets/images/electricaling.png',
-      'assets/images/ducting.png',
       'assets/images/plumbingg.png',
       'assets/images/general_maintenanceing.png',
+      'assets/images/ducting.png',
       'assets/images/interior_fitoutsing.png',
     ];
 
@@ -349,7 +349,7 @@ class _OrderPostPageState extends State<OrderPostPage> {
       return Builder(
         builder: (context) {
           OrderFormBloc formBloc = BlocProvider.of<OrderFormBloc>(context);
-          print("basic info ${widget.data.id} $post");
+          // print('main info 2 ${formBloc.main_info.value.main}');
           DateTime dateTime = DateTime.now();
           Widget body = FormBlocListener<OrderFormBloc, String, String>(
               onSubmitting: (context, state) {
@@ -436,7 +436,7 @@ class _OrderPostPageState extends State<OrderPostPage> {
                           border: OutlineInputBorder()),
                       builder: (context, state) {
                         return Text(
-                          state?.value?.address ?? 'hassan',
+                          state?.value?.address ?? '',
                           maxLines: 3,
                           overflow: TextOverflow.ellipsis,
                           softWrap: true,
@@ -1280,7 +1280,7 @@ class _AdditionPostPageState extends State<AdditionPostPage> {
                     ),
                     SizedBox(height: 10),
                     RaisedButton(
-                      child: Text(Localization.of(context).submit,
+                      child: Text('Add',
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 11,

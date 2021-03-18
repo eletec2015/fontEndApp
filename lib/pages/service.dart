@@ -26,12 +26,12 @@ class _ServicePageState extends State<ServicePage> {
                   mainAxisSpacing: 0,
                   crossAxisSpacing: 10,
                   children: [
-                    ['assets/images/airConditioned.png', Localization.of(context).serviceType[1], '1'],
-                    ['assets/images/electricaling.png', Localization.of(context).serviceType[0], '0'],
-                    ['assets/images/ducting.png',Localization.of(context).serviceType[3], '3'],
+                    ['assets/images/airConditioned.png', Localization.of(context).serviceType[0], '0'],
+                    ['assets/images/electricaling.png', Localization.of(context).serviceType[1], '1'],
                     ['assets/images/plumbingg.png',Localization.of(context).serviceType[2], '2'],
-                    ['assets/images/general_maintenanceing.png', Localization.of(context).serviceType[5], '5'],
-                    ['assets/images/interior_fitoutsing.png',Localization.of(context).serviceType[4], '4'],
+                    ['assets/images/general_maintenanceing.png', Localization.of(context).serviceType[3], '3'],
+                    ['assets/images/ducting.png',Localization.of(context).serviceType[4], '4'],
+                    ['assets/images/interior_fitoutsing.png',Localization.of(context).serviceType[5], '5'],
                   ].map((item) {
                     return GestureDetector(
                       child: _GridPhotoItem(

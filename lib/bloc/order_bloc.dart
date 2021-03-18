@@ -190,9 +190,9 @@ class OrderFormBloc extends FormBloc<String, String> {
     service
       ..listen((value) async {
         if (value != null && value.value != null) {
-          main_info.updateValue(DropDownData(service: value.value, main: 0));
+          main_info.updateValue(DropDownData(service: value.value, main: data.main_info));
           sub_info
-              .updateValue(DropDownData(service: value.value, main: 0, sub: 0));
+              .updateValue(DropDownData(service: value.value, main: data.main_info, sub: data.sub_info));
 
           main_info.updateItems(DropDownData.generateMain(
               service: value.value,
@@ -209,7 +209,7 @@ class OrderFormBloc extends FormBloc<String, String> {
       ..listen((value) async {
         if (value != null && value.value != null) {
           sub_info.updateValue(DropDownData(
-              service: service.value, main: value.value.main, sub: 0));
+              service: service.value, main: value.value.main, sub: data.sub_info));
 
           sub_info.updateItems(DropDownData.generateSub(
               service: service.value,

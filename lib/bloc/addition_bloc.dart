@@ -34,6 +34,7 @@ class AdditionBloc extends Bloc<AdditionEvent, AdditionState> {
       }).catchError((onError) {
         refreshController.refreshFailed();
         return state.copyWith(list: []);
+
       });
     }
   }

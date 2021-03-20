@@ -38,7 +38,7 @@ class _ContractListPageState extends State<ContractListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(Localization.of(context).contract,style: TextStyle(color: Colors.white,fontFamily: 'Amiko'),),
+          title: Text(Localization.of(context).contract,style: TextStyle(color: Colors.white,fontFamily: 'Amiko', fontSize: 17),),
           leading: BackButton(onPressed: () {
             context.navigator.root.pop();
           }),

@@ -15,6 +15,10 @@ part 'order_state.dart';
 // ignore_for_file: close_sinks
 // ignore_for_file: non_constant_identifier_names
 
+enum AlertMessageType {
+  success, error
+}
+
 class OrderListBloc extends Bloc<OrderEvent, OrderListState> {
   final BuildContext context;
 
@@ -263,6 +267,37 @@ class OrderFormBloc extends FormBloc<String, String> {
     to_date.addFieldError(errors['from_date'] ?? errors['non_field_errors']);
   }
 
+  Future<void> _showDialog(String title, String message, AlertMessageType type ) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title),
+          content: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                type == AlertMessageType.success ?
+                Icon(Icons.check_circle, color: Colors.green[500], size: 60,)
+                    : Icon(Icons.close_rounded, color: Colors.redAccent, size: 60,),
+                Text(message),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Ok', style: TextStyle(color: Color(0xFF1d364f), fontFamily: 'Amiko'),),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   void onSubmitting() {
     RestService.instance.postOrder({
@@ -277,9 +312,12 @@ class OrderFormBloc extends FormBloc<String, String> {
     }).then((value) {
       data = value;
       emitSuccess(canSubmitAgain: true);
+      print('HIT');
+      _showDialog('Success', 'Successfully Added', AlertMessageType.success);
     }).catchError((onError) {
       emitFailure();
       addErrors(onError?.response?.data);
+      _showDialog('Success', 'Successfully Added', AlertMessageType.success);
     });
   }
 }

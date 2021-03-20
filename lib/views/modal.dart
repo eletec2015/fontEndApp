@@ -29,7 +29,7 @@ Future<T> showImagePickModal<T>(BuildContext context,
                       fontFamily: 'Amiko')),
                   onPressed: () async {
                     await ImagePicker()
-                        .getImage(source: ImageSource.camera)
+                        .getImage(source: ImageSource.camera, imageQuality: 25)
                         .then((file) async {
                       if (file != null) {
                        return await ImageCropper.cropImage(
@@ -90,7 +90,7 @@ Future<T> showImagePickModal<T>(BuildContext context,
                       fontFamily: 'Amiko')),
                   onPressed: () async {
                     await ImagePicker()
-                        .getImage(source: ImageSource.gallery)
+                        .getImage(source: ImageSource.gallery, imageQuality: 25)
                         .then((file) async {
                       if (file != null) {
                         return await ImageCropper.cropImage(

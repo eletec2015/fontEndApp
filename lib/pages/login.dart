@@ -256,7 +256,7 @@ class VerifyView extends StatelessWidget {
                   textAlign: TextAlign.center,
                   text: TextSpan(
                       text: Localization.of(context).receiveHelp,
-                      style: TextStyle(color: Colors.black54, fontSize: 15),
+                      style: TextStyle(color: Colors.black54, fontSize: 17),
                       children: [
                         TextSpan(
                             text: Localization.of(context).reSend,

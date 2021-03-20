@@ -338,8 +338,44 @@ class OrderPostPage extends StatefulWidget {
   _OrderPostPageState createState() => _OrderPostPageState();
 }
 
+enum AlertMessageType {
+  success, error
+}
+
 class _OrderPostPageState extends State<OrderPostPage> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+
+
+  Future<void> _showDialog(String title, String message, AlertMessageType type ) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title),
+          content: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                type == AlertMessageType.success ?
+                  Icon(Icons.check_circle, color: Colors.green[500], size: 60,)
+                  : Icon(Icons.close_rounded, color: Colors.redAccent, size: 60,),
+                Text(message),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Ok', style: TextStyle(color: Color(0xFF1d364f), fontFamily: 'Amiko'),),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -454,7 +490,7 @@ class _OrderPostPageState extends State<OrderPostPage> {
                         Localization.of(context)
                             .orderStatus[1], // status not equal to confirmed,
                     showClearIcon: false,
-                    format: DateFormat('yyyy-MM-dd HH:mm'),
+                    format: DateFormat('dd-MM-yyyy HH:mm'),
                     initialDate: DateTime(
                         dateTime.year, dateTime.month, dateTime.day + 1, 12),
                     firstDate: DateTime(
@@ -474,7 +510,7 @@ class _OrderPostPageState extends State<OrderPostPage> {
                         Localization.of(context)
                             .orderStatus[1], // status not equal to confirmed,
                     showClearIcon: false,
-                    format: DateFormat('yyyy-MM-dd HH:mm'),
+                    format: DateFormat('dd-MM-yyyy HH:mm'),
                     initialDate: DateTime(
                         dateTime.year, dateTime.month, dateTime.day + 1, 14),
                     firstDate: DateTime(
@@ -492,8 +528,25 @@ class _OrderPostPageState extends State<OrderPostPage> {
                     child: RaisedButton(
                       child: Text(Localization.of(context).submit),
                       onPressed: () {
-                        print(formBloc.address);
-                        formBloc.submit();
+                        LoadingDialog.show(context);
+                        // formBloc.submit();
+                        RestService.instance.postOrder({
+                          'service': formBloc.service.value,
+                          'main_info': formBloc.main_info.value.main,
+                          'sub_info': formBloc.sub_info.value.sub,
+                          'address': formBloc.address.value.address ?? formBloc.address.value.toTitle,
+                          'lat': formBloc.lat.valueToDouble,
+                          'lng': formBloc.lat.valueToDouble,
+                          'from_date': DateFormat('yyyy-MM-dd HH:mm:ss').format(formBloc.from_date.value),
+                          'to_date': DateFormat('yyyy-MM-dd HH:mm:ss').format(formBloc.to_date.value)
+                        }).then((value) async {
+                          LoadingDialog.hide(context);
+                          await _showDialog('Success', 'Successfully Added', AlertMessageType.success);
+                          Navigator.pop(context);
+                        }).catchError((onError) {
+                          LoadingDialog.hide(context);
+                          _showDialog('Success', 'Successfully Added', AlertMessageType.success);
+                        });
                       },
                     ),
                   ),
@@ -535,9 +588,11 @@ class _OrderPostPageState extends State<OrderPostPage> {
                             ),
                           );
                           LoadingDialog.hide(context);
+                          await _showDialog('Success', 'Updated successfully', AlertMessageType.success);
                           Navigator.pop(context);
                         } catch (e) {
                           LoadingDialog.hide(context);
+                          _showDialog('Error', 'Failed To Update', AlertMessageType.error);
                           print('error while updating order ${e.message}');
                         }
                       },
@@ -553,7 +608,7 @@ class _OrderPostPageState extends State<OrderPostPage> {
                   appBar: AppBar(
                     title: Text('Order New',
                         style: TextStyle(
-                            color: Colors.white, fontFamily: "Amiko")),
+                            color: Colors.white, fontFamily: "Amiko", fontSize: 17)),
                   ),
                   body: body)
               : body;
@@ -1094,7 +1149,7 @@ class _OrderPageState extends State<OrderPage> {
                           title: Text(
                             title[selectedIndex],
                             style: TextStyle(
-                                color: Colors.white, fontFamily: 'Amiko'),
+                                color: Colors.white, fontFamily: 'Amiko', fontSize: 17),
                           ),
                           actions: state.user.role == 0
                               ? Localization.of(context)

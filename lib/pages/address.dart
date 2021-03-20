@@ -504,20 +504,23 @@ class _AddressPostPageState extends State<AddressPostPage> {
           return Scaffold(
               appBar: AppBar(
                 title: Text(Localization.of(context).address +
-                    '${path == '/put' ? ' Detail' : ' New'}',style: TextStyle(color:Colors.white,fontFamily: 'Amiko'),),
+                    '${path == '/put' ? ' Detail' : ' New'}',style: TextStyle(color:Colors.white,fontFamily: 'Amiko', fontSize: 17),),
                 actions: <Widget>[
                   IfNoneWidget(
                       basis: path == '/put',
                       builder: (context) {
-                        return IconButton(
-                          icon: Icon(Icons.delete),
-                          onPressed: () {
-                            if (state is AddressMapState) {
-                              mapBloc.delete();
-                            } else {
-                              formBloc.delete();
-                            }
-                          },
+                        return Visibility(
+                          visible: false,
+                          child: IconButton(
+                            icon: Icon(Icons.delete),
+                            onPressed: () {
+                              if (state is AddressMapState) {
+                                mapBloc.delete();
+                              } else {
+                                formBloc.delete();
+                              }
+                            },
+                          ),
                         );
                       }),
                   FlatButton(

@@ -60,8 +60,18 @@ return BlocBuilder<AppBloc, AppState>(
                           children: [
                             Center(
                               child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  SizedBox(height: 130,),
+                                  SizedBox(height: 70,),
+                                  Visibility(
+                                    visible: true,
+                                    child: Container(
+                                      margin: EdgeInsets.only(top: 10),
+                                      child: Image.asset(
+                                        'assets/images/icon_transparent.png', height: 100,width: 100,),
+                                    ),
+                                  ),
+                                  SizedBox(height: 5,),
                                   Text("ELETEC TECHNICAL WORK", style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
@@ -126,7 +136,7 @@ return BlocBuilder<AppBloc, AppState>(
                         leading: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Image.asset(
-                            "assets/images/helping.png", height: 30,
+                            "assets/images/address.png", height: 30,
                             width: 30,),
                         ),
                         title: Text(Localization
@@ -146,7 +156,7 @@ return BlocBuilder<AppBloc, AppState>(
                         leading: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Image.asset(
-                            "assets/images/profile.png", height: 30,
+                            "assets/images/profilenew.png", height: 30,
                             width: 30,),
                         ),
                         title: Text(Localization
@@ -195,7 +205,7 @@ return BlocBuilder<AppBloc, AppState>(
                         leading: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Image.asset(
-                            "assets/images/receipting.png", height: 30,
+                            "assets/images/helping.png", height: 30,
                             width: 30,),
                         ),
                         title: Text(Localization
@@ -304,7 +314,17 @@ return BlocBuilder<AppBloc, AppState>(
 
                    ):null
                  ):AppBar(
-                   backgroundColor: Color(0x001d364f)
+                   backgroundColor: Color(0x001d364f),
+                   actions: [
+                     Visibility(
+                       visible: false,
+                       child: Container(
+                         margin: EdgeInsets.only(right: 20, top: 10),
+                         child: Image.asset(
+                           'assets/images/icon_transparent.png', height: 50,width: 50,),
+                       ),
+                     ),
+                   ],
                  ),
                 body: Container(
                   constraints: BoxConstraints.expand(),
@@ -353,7 +373,7 @@ return BlocBuilder<AppBloc, AppState>(
                             Visibility(
                               visible: true,
                               child: CircleAvatar(
-                                radius: 35,
+                                radius: 40,
                                 backgroundColor: Colors.white,
                                 child: Image.asset(
                                   'assets/images/splash.jpg', height: 50,width: 50,),
@@ -362,7 +382,6 @@ return BlocBuilder<AppBloc, AppState>(
                           ],
                         ),
                       ),
-                      SizedBox(height: 10,),
                       ServicePage(),
                     ],
                   ) : OrderListPage(),

@@ -112,7 +112,7 @@ class Localization implements WidgetsLocalizations {
 
   String get contract => 'Contract';
 
-  String get faqs => 'Faqs';
+  String get faqs => 'FAQ';
 
   String get language => 'Language';
 
@@ -134,7 +134,7 @@ class Localization implements WidgetsLocalizations {
 
   String get camera => 'Camera';
 
-  String get gallery => 'Gallery';
+  String get gallery => 'Open Gallery';
 
   String get cancel => 'Cancel';
 
@@ -918,7 +918,7 @@ class $en extends Localization {
   String get contract => 'Contract';
 
   @override
-  String get faqs => 'Faqs';
+  String get faqs => 'FAQ';
 
   @override
   String get language => 'Language';
@@ -951,7 +951,7 @@ class $en extends Localization {
   String get camera => 'Camera';
 
   @override
-  String get gallery => 'Gallery';
+  String get gallery => 'Open Gallery';
 
   @override
   String get cancel => 'Cancel';

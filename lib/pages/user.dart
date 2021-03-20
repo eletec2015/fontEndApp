@@ -71,7 +71,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
     return Scaffold(
       backgroundColor: Colors.white,
         appBar: AppBar(   backgroundColor: Color(0xFF213c56),
-          title: Text(Localization.of(context).userProfile),
+          title: Text(Localization.of(context).userProfile, style: TextStyle(fontFamily: "Amiko", fontSize: 17),),
           leading: BackButton(
             onPressed: () {
               context.navigator.root.pop();
@@ -212,7 +212,7 @@ class _UserPhotoPageState extends State<UserPhotoPage> {
                 child: Scaffold(
                     key: _scaffoldKey,
                     appBar: AppBar(   backgroundColor: Color(0xFF213c56),
-                      title: Text(Localization.of(context).avatar),
+                      title: Text(Localization.of(context).avatar, style: TextStyle(fontFamily: 'Amiko', fontSize: 17),),
                       actions: <Widget>[
                         IconButton(
                             icon: Icon(Icons.more_horiz),

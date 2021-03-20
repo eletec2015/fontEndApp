@@ -117,6 +117,9 @@ flutter:
 
     - assets/images/otp.flr
     - assets/images/verify.png
+    - assets/images/address.png
+    - assets/images/profilenew.png
+    - assets/images/icon_transparent.png
 
 
     - assets/google_fonts/

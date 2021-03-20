@@ -83,7 +83,7 @@ class MapScreenState extends State<Profile>
 
     return new Scaffold(
         appBar: AppBar(backgroundColor: Color(0xFF213c56),
-          title: Text("Profile",style: TextStyle(color: Colors.white,fontFamily: 'Amiko'),),
+          title: Text("Profile",style: TextStyle(color: Colors.white,fontFamily: 'Amiko', fontSize: 17),),
         ),
         body: new Container(
           color: Colors.white,

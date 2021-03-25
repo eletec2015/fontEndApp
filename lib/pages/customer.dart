@@ -341,42 +341,45 @@ return BlocBuilder<AppBloc, AppState>(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(Localization
-                                    .of(context)
-                                    .welcome, style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.w500,
-                                    letterSpacing: 0,
-                                    fontFamily: 'Amiko'),),
-                                Text(Localization
-                                    .of(context)
-                                    .choose_service1, style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 13,
-                                    letterSpacing: 0,
-                                    fontFamily: 'Amiko'),),
-                                Text(Localization
-                                    .of(context)
-                                    .choose_service2, style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 12,
-                                    letterSpacing: 0,
-                                    fontFamily: 'Amiko'),),
-                              ],
+                            Flexible(
+                              flex: 2,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(Localization
+                                      .of(context)
+                                      .welcome, style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.w500,
+                                      letterSpacing: 0,
+                                      fontFamily: 'Amiko'),),
+                                  Text(Localization
+                                      .of(context)
+                                      .choose_service1, style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 13,
+                                      letterSpacing: 0,
+                                      fontFamily: 'Amiko'),),
+                                  Text(Localization
+                                      .of(context)
+                                      .choose_service2, style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 12,
+                                      letterSpacing: 0,
+                                      fontFamily: 'Amiko'),),
+                                ],
+                              ),
                             ),
-                            state.locale.languageCode == 'en' ?SizedBox(width: MediaQuery.of(context).size.width*0.06,):
-                            SizedBox(width: MediaQuery.of(context).size.width*0.23,),
-                            Visibility(
-                              visible: true,
-                              child: CircleAvatar(
-                                radius: 40,
-                                backgroundColor: Colors.white,
-                                child: Image.asset(
-                                  'assets/images/splash.jpg', height: 50,width: 50,),
+                            Flexible(
+                              child: Visibility(
+                                visible: true,
+                                child: CircleAvatar(
+                                  radius: 40,
+                                  backgroundColor: Colors.white,
+                                  child: Image.asset(
+                                    'assets/images/splash.jpg', height: 50,width: 50,),
+                                ),
                               ),
                             ),
                           ],

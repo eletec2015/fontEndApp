@@ -200,15 +200,17 @@ class MapScreenState extends State<Profile>
                                 mainAxisSize: MainAxisSize.max,
                                 children: <Widget>[
                                   new Flexible(
-                                    child: new TextField(
+                                    child: new TextFormField(
                                       decoration:  InputDecoration(
                                         hintText: "Enter Your First Name",
                                         errorText: _fnamevalidate ? _fnameError : null,
                                       ),
+                                      style: TextStyle(
+                                        color: _status ? Colors.grey : Colors.black
+                                      ),
                                       controller: fnameController,
                                       enabled: !_status,
                                       autofocus: !_status,
-
                                     ),
                                   ),
                                 ],
@@ -243,6 +245,9 @@ class MapScreenState extends State<Profile>
                                     child: new TextField(
                                       decoration: const InputDecoration(
                                           hintText: "Enter your Last Name"),
+                                      style: TextStyle(
+                                          color: _status ? Colors.grey : Colors.black
+                                      ),
                                       controller: lnameController,
                                       enabled: !_status,
                                     ),
@@ -280,6 +285,9 @@ class MapScreenState extends State<Profile>
                                       decoration:  InputDecoration(
                                           hintText: "Enter Email ID",
                                         errorText: _emailvalidate ? _emailError : null,),
+                                      style: TextStyle(
+                                          color: _status ? Colors.grey : Colors.black
+                                      ),
                                       enabled: !_status,
                                       controller: emailController,
                                     ),
@@ -318,6 +326,9 @@ class MapScreenState extends State<Profile>
                                       hintText: "Enter Mobile Number (+971 xx xxxxxxx)",
                                         errorText: _mobilevalidate ? _mobileError : null,),
                                       enabled: !_status,
+                                      style: TextStyle(
+                                          color: _status ? Colors.grey : Colors.black
+                                      ),
                                       controller: mobileController,
                                     ),
                                   ),

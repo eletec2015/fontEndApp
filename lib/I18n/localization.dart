@@ -64,8 +64,8 @@ class Localization implements WidgetsLocalizations {
       ];
 
   String get status => 'Status';
-  String get welcome => 'Welcome !!!! ';
-  String get welcome1 => 'Welcome !!!!';
+  String get welcome => 'Welcome';
+  String get welcome1 => 'Welcome';
 
   String get choose_service => 'Choose Service That You Need In ';
   String get choose_service1 => 'Choose Service That You Need In ';
@@ -966,7 +966,7 @@ class $en extends Localization {
   String get email => 'Email';
 
   @override
-  String get welcome => 'Welcome To Syanah time !!!';
+  String get welcome => 'Welcome To Syanah time';
 
   @override
   String get choose_service => 'Choose Service That You Need In Your Door Side';

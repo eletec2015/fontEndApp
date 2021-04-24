@@ -1055,31 +1055,53 @@ class _OrderPageState extends State<OrderPage> {
               break;
             case 1:
               return [
-                IconButton(
-                    icon: Icon(Icons.add),
-                    onPressed: () {
-                      // TODO: handle image upload here
-                      showImagePostModal(context, widget.data.id).then((value) {
-                        if (value != null && value) {
-                          additionBloc.add(AdditionRefreshList(widget.data.id));
-                          additionBloc.refreshController.requestRefresh();
-                        }
-                      });
-                    })
+                Container(
+                  margin: EdgeInsets.all(10),
+                  child: RaisedButton(
+                    color: Colors.white,
+                      child: Text(
+                          'Add',
+                        style: TextStyle(
+                          fontFamily: 'Amiko',
+                          fontWeight: FontWeight.bold,
+                            color: Color(0xFF213c56)
+                        ),
+                      ),
+                      onPressed: () {
+                        // TODO: handle image upload here
+                        showImagePostModal(context, widget.data.id).then((value) {
+                          if (value != null && value) {
+                            additionBloc.add(AdditionRefreshList(widget.data.id));
+                            additionBloc.refreshController.requestRefresh();
+                          }
+                        });
+                      }),
+                )
               ];
             case 2:
               return [
-                IconButton(
-                    icon: Icon(Icons.add),
-                    onPressed: () {
-                      showCommentModal(context, widget.data.id, 'order')
-                          .then((value) {
-                        if (value != null && value) {
-                          commentBloc.add(CommentRefreshList(widget.data.id));
-                          commentBloc.refreshController.requestRefresh();
-                        }
-                      });
-                    })
+                Container(
+                  margin: EdgeInsets.all(10),
+                  child: RaisedButton(
+                    color: Colors.white,
+                      child: Text(
+                        'Add',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Amiko',
+                          color: Color(0xFF213c56)
+                        ),
+                      ),
+                      onPressed: () {
+                        showCommentModal(context, widget.data.id, 'order')
+                            .then((value) {
+                          if (value != null && value) {
+                            commentBloc.add(CommentRefreshList(widget.data.id));
+                            commentBloc.refreshController.requestRefresh();
+                          }
+                        });
+                      }),
+                )
               ];
           }
           return [];

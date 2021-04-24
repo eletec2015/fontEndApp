@@ -629,13 +629,15 @@ class MapScreenState extends State<Profile>
 
   Widget _getEditIcon() {
     return new GestureDetector(
-      child: new CircleAvatar(
-        backgroundColor: Colors.red,
+      child: new InkWell(
         radius: 14.0,
-        child: new Icon(
-          Icons.edit,
-          color: Colors.white,
-          size: 16.0,
+        child: Text(
+            'Edit',
+          style: TextStyle(
+              fontSize: 16.0,
+            fontFamily: 'Amiko',
+            fontWeight: FontWeight.bold
+          ),
         ),
       ),
       onTap: () {

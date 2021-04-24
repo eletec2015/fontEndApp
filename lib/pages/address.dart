@@ -62,12 +62,12 @@ class _AddressListPageState extends State<AddressListPage> {
                   Container(
                     margin: EdgeInsets.all(10),
                     child: RaisedButton(
-                      color: Colors.white,
+                      elevation: 0,
                       child: Text('Add',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontFamily: 'Amiko',
-                          color: Color(0xFF213c56)
+                          color: Color(0xFFFFFFFF)
                         ),
                       ),
                       onPressed: () {

@@ -1058,13 +1058,13 @@ class _OrderPageState extends State<OrderPage> {
                 Container(
                   margin: EdgeInsets.all(10),
                   child: RaisedButton(
-                    color: Colors.white,
+                    elevation: 0,
                       child: Text(
                           'Add',
                         style: TextStyle(
                           fontFamily: 'Amiko',
                           fontWeight: FontWeight.bold,
-                            color: Color(0xFF213c56)
+                            color: Colors.white
                         ),
                       ),
                       onPressed: () {
@@ -1083,13 +1083,13 @@ class _OrderPageState extends State<OrderPage> {
                 Container(
                   margin: EdgeInsets.all(10),
                   child: RaisedButton(
-                    color: Colors.white,
+                    elevation: 0,
                       child: Text(
                         'Add',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontFamily: 'Amiko',
-                          color: Color(0xFF213c56)
+                          color: Colors.white,
                         ),
                       ),
                       onPressed: () {

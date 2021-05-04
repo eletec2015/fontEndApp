@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:auto_route/auto_route.dart';
 import 'package:bookservice/I18n/i18n.dart';
@@ -471,8 +472,15 @@ class _OrderPostPageState extends State<OrderPostPage> {
                           labelText: Localization.of(context).address,
                           border: OutlineInputBorder()),
                       builder: (context, state) {
+                        print(jsonEncode(state.value));
+                        String address;
+                        if(state?.value?.address != null) {
+                          address = state?.value?.address;
+                        } else if(state?.value?.roomNo != null || state?.value?.building != null) {
+                          address = '${state?.value?.roomNo} ${state?.value?.building} ${state?.value?.street} ${state?.value?.community}';
+                        }
                         return Text(
-                          state?.value?.address ?? '',
+                          address ?? '',
                           maxLines: 3,
                           overflow: TextOverflow.ellipsis,
                           softWrap: true,

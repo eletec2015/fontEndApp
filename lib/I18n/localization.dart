@@ -404,7 +404,7 @@ We offer over maintenance services within the following service categories - Plu
         new FAQ('How do I book a service?', '''
 Customers can book a service using the following methods –
 1)Book from our iOS and Android mobile apps.
-2)Or give us a call +971 60 059 3323.
+2)Or give us a call +971 600 50 33 23.
 We recommend downloading and using our Android and iOS mobile apps, for the best user end-to-end experience.
 '''),
         new FAQ('Can I schedule a service for a later date/time?', '''
@@ -416,7 +416,7 @@ Customers can book a Scheduled Service (> 24 hours) offered during standard offi
 Yes. Our Scheduled Services are offered on Friday or Public Holidays. But there will be a AED200 charge.
 '''),
         new FAQ('Do we offer contracts?', '''
-Yes, we have contracts for Annual Maintenance Contracts, which we have 4 options (Economy, Standard, Premium, and Customized Package) as per the client needs. You can find the details in our mobile app, or you can or give us a call +971 60 059 3323.
+Yes, we have contracts for Annual Maintenance Contracts, which we have 4 options (Economy, Standard, Premium, and Customized Package) as per the client needs. You can find the details in our mobile app, or you can or give us a call +971 600 50 33 23.
 '''),
         new FAQ('Please explain the 7 Day Service Warranty', '''
 For every service we deliver, we offer a 7-day service warranty which means that if what we fixed is reported faulty again within 7 calendar days, we will come back and try to fix it for free. In case the issue is with the parts and materials, any return on that will be dependent on the warranty that comes from the supplier. Generally parts do not come with a warranty when bought standalone. Also, our Service Warranty is for repair and installation jobs only.
@@ -430,7 +430,7 @@ There is no direct calling enabled between the technician and the customer. Once
 To cancel a booking, a customer needs to either call or cancel the booking from the app, by clicking on the delete button. For details on cancellation policy, please refer our policy.
 '''),
         new FAQ('Can I reschedule a booking?', '''
-You can reschedule the booking calling to the toll free number (+971 60 059 3323.) of the company line.
+You can reschedule the booking calling to the toll free number (+971 600 50 33 23.) of the company line.
 '''),
         new FAQ('How and when do I pay for a service?', '''
 You can pay for a service by a credit card/ debit card, account transfer or in cash upon completion of your job or as advance if the job requires an advance payment. Advance payment is generally required for jobs which need procurement of parts and materials.
@@ -1292,7 +1292,7 @@ Customers can book a Scheduled Service (> 24 hours) offered during standard offi
 Yes. Our Scheduled Services are offered on Friday or Public Holidays. But there will be a AED200 charge.
 '''),
         new FAQ('Do we offer contracts?', '''
-Yes, we have contracts for Annual Maintenance Contracts, which we have 4 options (Economy, Standard, Premium, and Customized Package) as per the client needs. You can find the details in our mobile app, or you can or give us a call +971 60 059 3323.
+Yes, we have contracts for Annual Maintenance Contracts, which we have 4 options (Economy, Standard, Premium, and Customized Package) as per the client needs. You can find the details in our mobile app, or you can or give us a call +971 600 50 33 23.
 '''),
         new FAQ('Please explain the 7 Day Service Warranty', '''
 For every service we deliver, we offer a 7-day service warranty which means that if what we fixed is reported faulty again within 7 calendar days, we will come back and try to fix it for free. In case the issue is with the parts and materials, any return on that will be dependent on the warranty that comes from the supplier. Generally parts do not come with a warranty when bought standalone. Also, our Service Warranty is for repair and installation jobs only.
@@ -1306,7 +1306,7 @@ There is no direct calling enabled between the technician and the customer. Once
 To cancel a booking, a customer needs to either call or cancel the booking from the app, by clicking on the delete button. For details on cancellation policy, please refer our policy.
 '''),
         new FAQ('Can I reschedule a booking?', '''
-You can reschedule the booking calling to the toll free number (+971 60 059 3323.) of the company line.
+You can reschedule the booking calling to the toll free number (+971 600 50 33 23.) of the company line.
 '''),
         new FAQ('How and when do I pay for a service?', '''
 You can pay for a service by a credit card/ debit card, account transfer or in cash upon completion of your job or as advance if the job requires an advance payment. Advance payment is generally required for jobs which need procurement of parts and materials.

@@ -363,6 +363,7 @@ class MapScreenState extends State<Profile>
                                   ),
                                   Expanded(
                                     child: Container(
+                                      width: 10,
                                       child: new ListTile(
                                         title: const Text('Female'),
                                         leading: Radio(

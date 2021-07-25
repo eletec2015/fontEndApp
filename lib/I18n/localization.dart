@@ -1280,7 +1280,7 @@ We offer over maintenance services within the following service categories - Plu
         new FAQ('How do I book a service?', '''
 Customers can book a service using the following methods –
 1)Book from our iOS and Android mobile apps.
-2)Or give us a call +971 60 059 3323.
+2)Or give us a call +971 600 50 33 23.
 We recommend downloading and using our Android and iOS mobile apps, for the best user end-to-end experience.
 '''),
         new FAQ('Can I schedule a service for a later date/time?', '''

@@ -16,7 +16,7 @@ class _WelcomePageState extends State<WelcomePage> {
   @override
   void initState() {
     super.initState();
-    // url = RestServiceExtra.instance.getAdvertising();
+    url = RestServiceExtra.instance.getAdvertising();
   }
 
   @override

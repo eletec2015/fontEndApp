@@ -16,6 +16,10 @@ import 'package:google_map_location_picker/google_map_location_picker.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:google_maps_flutter_platform_interface/google_maps_flutter_platform_interface.dart';
 
+enum AlertMessage {
+  success, error
+}
+
 // ignore_for_file: close_sinks
 class AddressPage extends StatefulWidget {
   @override
@@ -51,8 +55,18 @@ class _AddressListPageState extends State<AddressListPage> {
               appBar: AppBar(
                 backgroundColor: Color(0xFF213c56),
                 title: pick
-                    ? Text(Localization.of(context).chooseAddress,style: TextStyle(color: Colors.white,fontFamily: 'Amiko', fontSize: 17),)
-                    : Text(Localization.of(context).address,style: TextStyle(color: Colors.white,fontFamily: 'Amiko', fontSize: 17)),
+                    ? Text(
+                        Localization.of(context).chooseAddress,
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: 'Amiko',
+                            fontSize: 17),
+                      )
+                    : Text(Localization.of(context).address,
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: 'Amiko',
+                            fontSize: 17)),
                 leading: pick
                     ? Container()
                     : BackButton(onPressed: () {
@@ -63,12 +77,12 @@ class _AddressListPageState extends State<AddressListPage> {
                     margin: EdgeInsets.all(10),
                     child: RaisedButton(
                       elevation: 0,
-                      child: Text('Add',
+                      child: Text(
+                        'Add',
                         style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Amiko',
-                          color: Color(0xFFFFFFFF)
-                        ),
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Amiko',
+                            color: Color(0xFFFFFFFF)),
                       ),
                       onPressed: () {
                         if (pick) {
@@ -124,6 +138,7 @@ class _AddressListPageState extends State<AddressListPage> {
                         } else {
                           body = Text("No more Data");
                         }
+
                         return Container(
                           height: 55.0,
                           child: Center(child: body),
@@ -134,7 +149,10 @@ class _AddressListPageState extends State<AddressListPage> {
                     onRefresh: () => bloc.add(AddressRefreshList()),
                     child: ListView.builder(
                       padding: const EdgeInsets.symmetric(horizontal: 8),
-                      itemBuilder: (c, i) => _buildItem(state.list[i], pick,),
+                      itemBuilder: (c, i) => _buildItem(
+                        state.list[i],
+                        pick,
+                      ),
                       itemCount: state.list.length,
                     ),
                   );
@@ -145,6 +163,63 @@ class _AddressListPageState extends State<AddressListPage> {
     return BlocProvider(create: (_) => AddressBloc(), child: body);
   }
 
+  Future<void> _showDialog(String title, String message, AlertMessage type ) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title),
+          content: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                type == AlertMessage.success ?
+                Icon(Icons.check_circle, color: Colors.green[500], size: 60,)
+                    : Icon(Icons.close_rounded, color: Colors.redAccent, size: 60,),
+                Text(message),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            RaisedButton(
+              child: Text('Ok', style: TextStyle(color: Colors.white, fontFamily: 'Amiko'),),
+              onPressed: () {
+                context.navigator.pop();
+                context.navigator.pop();
+                context.navigator.popAndPush('/address/');
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> _showConfirmDialog(Function callback) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Are you sure?', style: TextStyle(color: Color(0xFF1d364f), fontFamily: 'Amiko'), ),
+          actions: <Widget>[
+            RaisedButton(
+              child: Text('Yes', style: TextStyle(color: Colors.white, fontFamily: 'Amiko'),),
+              onPressed: callback,
+            ),
+            RaisedButton(
+              child: Text('No', style: TextStyle(color: Colors.white, fontFamily: 'Amiko'),),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   _buildItem(Address data, bool pick) {
     final MaterialColor bgColor = Colors.blue;
 
@@ -152,8 +227,7 @@ class _AddressListPageState extends State<AddressListPage> {
       padding: const EdgeInsets.only(left: 5.0, right: 5.0, top: 5.0),
       child: Card(
         elevation: 5,
-        shape:
-        RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         child: ClipPath(
           child: Container(
             height: 140,
@@ -172,10 +246,17 @@ class _AddressListPageState extends State<AddressListPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Flexible(
-                          child: data.style == 0 ?
-                            Icon(Icons.location_on, color: const Color(0xFF1d364f), size: 60,)
-                              : Icon(Icons.location_on_outlined, color: const Color(0xFF1d364f), size: 60,)
-                        ),
+                            child: data.style == 0
+                                ? Icon(
+                                    Icons.location_on,
+                                    color: const Color(0xFF1d364f),
+                                    size: 60,
+                                  )
+                                : Icon(
+                                    Icons.location_on_outlined,
+                                    color: const Color(0xFF1d364f),
+                                    size: 60,
+                                  )),
                       ],
                     ),
                   ),
@@ -191,37 +272,70 @@ class _AddressListPageState extends State<AddressListPage> {
                           child: Container(
                             margin: EdgeInsets.symmetric(horizontal: 10),
                             child: Column(
-                              mainAxisAlignment:
-                              MainAxisAlignment.spaceEvenly,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
                                   data.toTitle,
                                   style: TextStyle(
                                       color: const Color(0xFF1d364f),
-                                      fontFamily: 'Amiko', fontWeight: FontWeight.w700),
+                                      fontFamily: 'Amiko',
+                                      fontWeight: FontWeight.w700),
                                 ),
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    pick ?
-                                    RaisedButton(onPressed: () {
-                                      context.navigator.pop(data);
-                                    }, child: Text('Select'),)
-                                        :
-                                    RaisedButton(onPressed: () {
-                                      context.navigator
-                                          .push('/put',
-                                          arguments:
-                                          AddressPostPageArguments(data: data))
-                                          .then((value) {
-                                        if (value != null && value) {
-                                          AddressBloc bloc =
-                                          BlocProvider.of<AddressBloc>(context);
-                                          bloc.refreshController.requestRefresh();
-                                        }
-                                      });
-                                    }, child: Text('View Details'),)
+                                    Flexible(
+                                      flex: 2,
+                                      fit: FlexFit.loose,
+                                      child: pick
+                                          ? RaisedButton(
+                                        onPressed: () {
+                                          context.navigator.pop(data);
+                                        },
+                                        child: Text('Select'),
+                                      )
+                                          : RaisedButton(
+                                        onPressed: () {
+                                          context.navigator
+                                              .push('/put',
+                                              arguments:
+                                              AddressPostPageArguments(
+                                                  data: data))
+                                              .then((value) {
+                                            if (value != null && value) {
+                                              AddressBloc bloc =
+                                              BlocProvider.of<
+                                                  AddressBloc>(context);
+                                              bloc.refreshController
+                                                  .requestRefresh();
+                                            }
+                                          });
+                                        },
+                                        child: Text('View Details'),
+                                      ),
+                                    ),
+                                    Flexible(
+                                      flex: 1,
+                                      fit: FlexFit.loose,
+                                      child: IconButton(
+                                        color: Colors.redAccent,
+                                        onPressed: () {
+                                          _showConfirmDialog(() {
+                                            RestService.instance.deleteAddress('${data.id}').then((value) {
+                                              _showDialog('Success', 'Deleted successfully', AlertMessage.success);
+                                              setState(() {
+
+                                              });
+                                            }).catchError((onError) {
+                                              print(onError);
+                                              _showDialog('Error', 'Failed to Delete', AlertMessage.error);
+                                            });
+                                          });
+                                        },
+                                        icon: Icon(Icons.delete),
+                                      ),
+                                    )
                                   ],
                                 )
                               ],
@@ -305,10 +419,12 @@ class _AddressPostPageState extends State<AddressPostPage> {
                       DropdownFieldBlocBuilder(
                         showEmptyItem: false,
                         decoration: InputDecoration(
-                            labelText: 'Model', border: OutlineInputBorder(),labelStyle:TextStyle(
-                            color: Colors.white,
-                            fontSize: 11,
-                            fontFamily: 'Amiko')),
+                            labelText: 'Model',
+                            border: OutlineInputBorder(),
+                            labelStyle: TextStyle(
+                                color: Colors.white,
+                                fontSize: 11,
+                                fontFamily: 'Amiko')),
                         itemBuilder: (context, value) =>
                             ['Personal', 'Company'][value],
                         selectFieldBloc: mapBloc.model,
@@ -316,10 +432,12 @@ class _AddressPostPageState extends State<AddressPostPage> {
                       DropdownFieldBlocBuilder(
                         showEmptyItem: false,
                         decoration: InputDecoration(
-                            labelText: 'Style', border: OutlineInputBorder(),labelStyle:TextStyle(
-                            color: Colors.white,
-                            fontSize: 11,
-                            fontFamily: 'Amiko')),
+                            labelText: 'Style',
+                            border: OutlineInputBorder(),
+                            labelStyle: TextStyle(
+                                color: Colors.white,
+                                fontSize: 11,
+                                fontFamily: 'Amiko')),
                         itemBuilder: (context, value) =>
                             ['Apartment', 'Villa'][value],
                         selectFieldBloc: mapBloc.style,
@@ -329,10 +447,11 @@ class _AddressPostPageState extends State<AddressPostPage> {
                         isEnabled: false,
                         decoration: InputDecoration(
                             labelText: 'Latitude',
-                            border: OutlineInputBorder(),labelStyle:TextStyle(
-                        color: Colors.white,
-                            fontSize: 11,
-                            fontFamily: 'Amiko')),
+                            border: OutlineInputBorder(),
+                            labelStyle: TextStyle(
+                                color: Colors.white,
+                                fontSize: 11,
+                                fontFamily: 'Amiko')),
                       ),
                       TextFieldBlocBuilder(
                         textFieldBloc: mapBloc.lng,
@@ -340,26 +459,28 @@ class _AddressPostPageState extends State<AddressPostPage> {
                         focusNode: FocusNode(),
                         decoration: InputDecoration(
                             labelText: 'Longitude',
-                            border: OutlineInputBorder(),labelStyle:TextStyle(
-              color: Colors.white,
-              fontSize: 11,
-              fontFamily: 'Amiko')),
+                            border: OutlineInputBorder(),
+                            labelStyle: TextStyle(
+                                color: Colors.white,
+                                fontSize: 11,
+                                fontFamily: 'Amiko')),
                       ),
                       TextFieldBlocBuilder(
                         textFieldBloc: mapBloc.address,
                         isEnabled: false,
                         maxLines: 3,
                         decoration: InputDecoration(
-                            labelText: 'Address', border: OutlineInputBorder(),labelStyle:TextStyle(
-              color: Colors.white,
-              fontSize: 11,
-              fontFamily: 'Amiko')),
+                            labelText: 'Address',
+                            border: OutlineInputBorder(),
+                            labelStyle: TextStyle(
+                                color: Colors.white,
+                                fontSize: 11,
+                                fontFamily: 'Amiko')),
                       ),
                       FlatButton(
                         child: Text('Select again on the map'),
                         onPressed: () {
                           showLocationPicker(context, Constant.ApiKey,
-
                                   initialCenter: LatLng(
                                       mapBloc.lat.valueToDouble,
                                       mapBloc.lng.valueToDouble),
@@ -424,20 +545,25 @@ class _AddressPostPageState extends State<AddressPostPage> {
                         DropdownFieldBlocBuilder(
                           showEmptyItem: false,
                           decoration: InputDecoration(
-                            labelStyle:TextStyle(fontFamily: 'Amiko'),
-                              labelText: Localization.of(context).model, border: OutlineInputBorder()),
-                          itemBuilder: (context, value) =>
-                              [Localization.of(context).modeltype[0],Localization.of(context).modeltype[1]][value],
-
+                              labelStyle: TextStyle(fontFamily: 'Amiko'),
+                              labelText: Localization.of(context).model,
+                              border: OutlineInputBorder()),
+                          itemBuilder: (context, value) => [
+                            Localization.of(context).modeltype[0],
+                            Localization.of(context).modeltype[1]
+                          ][value],
                           selectFieldBloc: formBloc.model,
                         ),
                         DropdownFieldBlocBuilder(
                           showEmptyItem: false,
                           decoration: InputDecoration(
-                              labelStyle:TextStyle(fontFamily: 'Amiko'),
-                              labelText: Localization.of(context).style, border: OutlineInputBorder()),
-                          itemBuilder: (context, value) =>
-                              [Localization.of(context).styletype[0], Localization.of(context).styletype[1]][value],
+                              labelStyle: TextStyle(fontFamily: 'Amiko'),
+                              labelText: Localization.of(context).style,
+                              border: OutlineInputBorder()),
+                          itemBuilder: (context, value) => [
+                            Localization.of(context).styletype[0],
+                            Localization.of(context).styletype[1]
+                          ][value],
                           selectFieldBloc: formBloc.style,
                         ),
                         TextFieldBlocBuilder(
@@ -480,14 +606,12 @@ class _AddressPostPageState extends State<AddressPostPage> {
                               children: <Widget>[
                                 SizedBox(height: 10),
                                 RaisedButton(
-                                  child:
-                                      Text(Localization.of(context).mapinfo),
+                                  child: Text(Localization.of(context).mapinfo),
                                   onPressed: () async {
                                     showLocationPicker(context, Constant.ApiKey,
                                             initialCenter: LatLng(
                                                 25.108220955794977,
                                                 55.21488390862942),
-
                                             myLocationButtonEnabled: true,
                                             layersButtonEnabled: true,
                                             automaticallyAnimateToCurrentLocation:
@@ -513,8 +637,12 @@ class _AddressPostPageState extends State<AddressPostPage> {
 
           return Scaffold(
               appBar: AppBar(
-                title: Text(Localization.of(context).address +
-                    '${path == '/put' ? ' Detail' : ' New'}',style: TextStyle(color:Colors.white,fontFamily: 'Amiko', fontSize: 17),),
+                title: Text(
+                  Localization.of(context).address +
+                      '${path == '/put' ? ' Detail' : ' New'}',
+                  style: TextStyle(
+                      color: Colors.white, fontFamily: 'Amiko', fontSize: 17),
+                ),
                 actions: <Widget>[
                   IfNoneWidget(
                       basis: path == '/put',
@@ -534,7 +662,9 @@ class _AddressPostPageState extends State<AddressPostPage> {
                         );
                       }),
                   FlatButton(
-                    child: Text(Localization.of(context).submit,style: TextStyle(color:Colors.white,fontFamily: 'Amiko')),
+                    child: Text(Localization.of(context).submit,
+                        style: TextStyle(
+                            color: Colors.white, fontFamily: 'Amiko')),
                     onPressed: () {
                       if (state is AddressMapState) {
                         mapBloc.submit();
